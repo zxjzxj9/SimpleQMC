@@ -7,6 +7,7 @@ If we use the following trial function:
 $$\psi(r) = (c r+1) e^{-\alpha r}$$
 
 The the ration of the probabilty density at two different sites r1 and r2 becomes:
+
 $$\frac{\rho(r_1)}{\rho(r_2)} = \frac{(c r_1+1)^2 e^{2 \alpha  (r_2-r_1)}}{(c r_2+1)^2}$$
 
 We have the expectation of the energy:
