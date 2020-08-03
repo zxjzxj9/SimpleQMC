@@ -1,13 +1,12 @@
+#pragma once
 #include <cmath>
 #include <random>
-// #include <fmt/core.h>
 
 template <typename T>
 class NaiveQMC {
 
 public:
     NaiveQMC(T c, T alpha, T dr): c(c), alpha(alpha), dr(dr) {
-
     }
 
     T inline rho_ratio(T r1, T r2) {
@@ -20,7 +19,9 @@ public:
             alpha*(2-alpha*r)-2)/(2*r*(c*r+1));
     }
 
-    pair<T, T> sample(int maxstep=10000) {
+    std::pair<T, T> sample(int maxstep=10000) {
+        std::uniform_real_distribution<T> dist(-dr, dr);
+        std::uniform_real_distribution<T> rnum(0, 1);
         T rold = 0.0;
         T rnew = 0.0;
         T energy = energy_func(rold);
@@ -38,7 +39,7 @@ public:
         }
         auto mean = etot/static_cast<T>(maxstep);
         auto std = std::sqrt(etot_sq/static_cast<T>(maxstep)-
-            std::powd(mean, 2));
+            std::pow(mean, 2));
         return std::make_pair(mean, std);
     }
 
@@ -47,6 +48,4 @@ private:
     T dr;
     std::random_device rd;
     std::mt19937 rgen{rd};
-    std::uniform_real_distribution<T> dist(-dr, dr);
-    std::uniform_real_distribution<T> rnum(0, 1);
 };
