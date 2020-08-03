@@ -1,6 +1,6 @@
 (* Generate the derivative give the trail wavefunction *)
 
-Needs["CCodeGenerator`"]
+(* Needs["CCodeGenerator`"] *)
 wavefn[r_] = (1+c*r)*Exp[-\[Alpha]*r];
 d2wd2rxr = D[r*wavefn[r], {r, 2}]
 (* dwdr = D[wavefn[r], {r, 2}] *)
