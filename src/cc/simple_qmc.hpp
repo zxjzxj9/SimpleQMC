@@ -1,6 +1,7 @@
 #pragma once
 #include <cmath>
 #include <random>
+#include <fmt/core.h>
 
 template <typename T>
 class NaiveQMC {
@@ -22,14 +23,15 @@ public:
     std::pair<T, T> sample(int maxstep=10000) {
         std::uniform_real_distribution<T> dist(-dr, dr);
         std::uniform_real_distribution<T> rnum(0, 1);
-        T rold = 0.0;
-        T rnew = 0.0;
+        T rnew, rold = 1e-6;
         T energy = energy_func(rold);
-        T etot = energy;
-        T etot_sq = std::pow(energy, 2);
+        // fmt::print("{:f}\n",rold);
+        // exit(0);
+        T etot = 0;
+        T etot_sq = 0;
         for(int i=0; i<maxstep; i++) {
             rnew = rold + dist(rgen);
-            auto ratio = rho_ratio(rnew, rold);
+            auto ratio = rho_ratio(rold, rnew);
             if(ratio > 1 || ratio > rnum(rgen)) {
                 rold = rnew;
                 energy = energy_func(rold);
@@ -38,8 +40,8 @@ public:
             etot_sq += std::pow(energy, 2);
         }
         auto mean = etot/static_cast<T>(maxstep);
-        auto std = std::sqrt(etot_sq/static_cast<T>(maxstep)-
-            std::pow(mean, 2));
+        // auto std = etot_sq/static_cast<T>(maxstep);
+        auto std = std::sqrt(etot_sq/static_cast<T>(maxstep) - std::pow(mean, 2));
         return std::make_pair(mean, std);
     }
 
@@ -47,5 +49,5 @@ private:
     T c, alpha;
     T dr;
     std::random_device rd;
-    std::mt19937 rgen{rd};
+    std::mt19937 rgen{rd()};
 };
