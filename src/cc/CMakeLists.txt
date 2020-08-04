@@ -1,6 +1,10 @@
 add_definitions(-std=c++11)
 find_package(fmt CONFIG REQUIRED)
+find_package(cxxopts CONFIG REQUIRED)
 
 set(SIMPLE_QMC_SRC simple_qmc.cc)
-add_executable(simple_qmc.x ${SIMPLE_QMC_SRC})
-target_link_libraries(simple_qmc.x PRIVATE fmt::fmt fmt::fmt-header-only)
+set(SIMPLE_QMC_SRC_EXE simple_qmc.x)
+add_executable(${SIMPLE_QMC_SRC_EXE} ${SIMPLE_QMC_SRC})
+target_link_libraries(${SIMPLE_QMC_SRC_EXE} PRIVATE fmt::fmt fmt::fmt-header-only)
+target_link_libraries(${SIMPLE_QMC_SRC_EXE} PRIVATE cxxopts::cxxopts)
+# install(TARGETS ${SIMPLE_QMC_SRC_EXE} DESTINATION binary)
