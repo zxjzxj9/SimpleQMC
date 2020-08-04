@@ -23,7 +23,7 @@ public:
     std::pair<T, T> sample(int maxstep=10000) {
         std::uniform_real_distribution<T> dist(-dr, dr);
         std::uniform_real_distribution<T> rnum(0, 1);
-        T rnew, rold = 1e-6;
+        T rnew, rold = 1.0;
         T energy = energy_func(rold);
         // fmt::print("{:f}\n",rold);
         // exit(0);
@@ -31,7 +31,7 @@ public:
         T etot_sq = 0;
         for(int i=0; i<maxstep; i++) {
             rnew = rold + dist(rgen);
-            auto ratio = rho_ratio(rold, rnew);
+            auto ratio = rho_ratio(rnew, rold);
             if(ratio > 1 || ratio > rnum(rgen)) {
                 rold = rnew;
                 energy = energy_func(rold);
