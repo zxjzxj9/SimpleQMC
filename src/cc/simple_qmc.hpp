@@ -11,11 +11,14 @@ public:
     }
 
     T inline rho_ratio(T r1, T r2) {
+        // r1 = std::abs(r1);
+        // r2 = std::abs(r2);
         return std::pow(c*r1+1, 2)/std::pow(c*r2+1, 2)*
             std::exp(2*alpha*(r2-r1));
     }
 
     T inline energy_func(T r) {
+        // r = std::abs(r);
         return (-c*(r*(alpha*(alpha*r-4)+2)+2)+
             alpha*(2-alpha*r)-2)/(2*r*(c*r+1));
     }
@@ -32,7 +35,7 @@ public:
         for(int i=0; i<maxstep; i++) {
             rnew = rold + dist(rgen);
             auto ratio = rho_ratio(rnew, rold);
-            if(ratio > 1 || ratio > rnum(rgen)) {
+            if(rnew > 0 && ratio > 1 || ratio > rnum(rgen)) {
                 rold = rnew;
                 energy = energy_func(rold);
             }

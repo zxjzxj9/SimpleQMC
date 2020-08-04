@@ -23,12 +23,12 @@ int main(int argc, char** argv) {
         ("s,step", "Monte Carlo step size", cxxopts::value<double>()->default_value("1.0"))
         ("n,nstep", "Monte Carlo step size", cxxopts::value<int>()->default_value("1000000"))
         ("h,help", "Print usage")
-        ("cmin", "Minimum parameter c")
-        ("cmax", "Maximum parameter c")
-        ("alphamin", "Minimum parameter alpha")
-        ("alphamax", "Maximum parameter alpha")
-        ("ngridc", "Number of grid in c")
-        ("ngridalpha", "Number of grid alpha")
+        ("cmin", "Minimum parameter c", cxxopts::value<double>())
+        ("cmax", "Maximum parameter c", cxxopts::value<double>())
+        ("alphamin", "Minimum parameter alpha", cxxopts::value<double>())
+        ("alphamax", "Maximum parameter alpha", cxxopts::value<double>())
+        ("ngridc", "Number of grid in c", cxxopts::value<int>())
+        ("ngridalpha", "Number of grid alpha", cxxopts::value<int>())
     ;
     auto result = options.parse(argc, argv);
 
@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
         auto ngridc = result["ngridc"].as<int>();
         auto alphamin = result["alphamin"].as<double>();
         auto alphamax = result["alphamax"].as<double>();
-        auto ngridalpha = result["gridalpha"].as<int>();
+        auto ngridalpha = result["ngridalpha"].as<int>();
         double dr = result["step"].as<double>();
         int nstep = result["nstep"].as<int>();
 
@@ -70,7 +70,9 @@ int main(int argc, char** argv) {
             for(auto alpha: linspace(alphamin, alphamax, ngridalpha)) {
                 NaiveQMC<double> sampler(c, alpha, dr);
                 double mean, std;
+                //do {
                 std::tie(mean, std) = sampler.sample(nstep);
+                //} while(std > 0.01);
                 fmt::print("{:>20.6f}\t{:>20.6f}\t{:>20.6f}\t{:>20.6f}\n", c, alpha, mean, std);
             }
         }

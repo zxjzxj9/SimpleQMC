@@ -56,5 +56,6 @@
         "regex": "cpp",
         "iostream": "cpp",
         "shared_mutex": "cpp"
-    }
+    },
+    "python.pythonPath": "/home/stardust/miniconda3/envs/py38/bin/python"
 }
