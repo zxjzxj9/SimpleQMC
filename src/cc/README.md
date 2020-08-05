@@ -16,3 +16,10 @@ $$\langle \psi|\hat{H}|\psi\rangle = \underset{r \sim \rho(r)}{E} \frac{\hat{H}\
 Given the trial wavefunction, we have the energy expression as follows,
 
 $$\frac{\hat{H}\psi(r)}{\psi(r)} = \frac{-c (r (\alpha  (\alpha  r-4)+2)+2)+\alpha  (2-\alpha  r)-2}{2 r (c r+1)}$$
+
+Notice the random walk should be always in 3d space, so our coordinate r should be:
+
+$$ \mathbf{r} = (x, y, z)$$
+
+The finial contour plot with different parameters can be shown in the following figure:
+![energy figure](../imgs/energy_surface.png)

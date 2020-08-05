@@ -70,9 +70,7 @@ int main(int argc, char** argv) {
             for(auto alpha: linspace(alphamin, alphamax, ngridalpha)) {
                 NaiveQMC<double> sampler(c, alpha, dr);
                 double mean, std;
-                //do {
                 std::tie(mean, std) = sampler.sample(nstep);
-                //} while(std > 0.01);
                 fmt::print("{:>20.6f}\t{:>20.6f}\t{:>20.6f}\t{:>20.6f}\n", c, alpha, mean, std);
             }
         }
