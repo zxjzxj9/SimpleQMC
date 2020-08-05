@@ -1,6 +1,7 @@
 add_definitions(-std=c++11 -O2)
 find_package(fmt CONFIG REQUIRED)
 find_package(cxxopts CONFIG REQUIRED)
+find_package(Eigen3 CONFIG REQUIRED)
 
 set(SIMPLE_QMC_SRC simple_qmc.cc)
 set(SIMPLE_QMC_EXE simple_qmc.x)
@@ -14,3 +15,4 @@ set(HYDROGEN_QMC_EXE hydrogen.x)
 add_executable(${HYDROGEN_QMC_EXE} ${HYDROGEN_QMC_SRC})
 target_link_libraries(${HYDROGEN_QMC_EXE} PRIVATE fmt::fmt fmt::fmt-header-only)
 target_link_libraries(${HYDROGEN_QMC_EXE} PRIVATE cxxopts::cxxopts)
+target_link_libraries(${HYDROGEN_QMC_EXE} PRIVATE Eigen3::Eigen)

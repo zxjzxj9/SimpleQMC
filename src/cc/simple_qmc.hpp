@@ -7,8 +7,7 @@ template <typename T>
 class NaiveQMC {
 
 public:
-    NaiveQMC(T c, T alpha, T dr): c(c), alpha(alpha), dr(dr) {
-    }
+    NaiveQMC(T c, T alpha, T dr): c(c), alpha(alpha), dr(dr) {}
 
     // return rho1 / rho2
     T inline rho_ratio(T r1, T r2) {
