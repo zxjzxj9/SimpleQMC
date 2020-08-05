@@ -21,7 +21,8 @@ Notice the random walk should be always in 3d space, so our coordinate r should 
 
 $$ \mathbf{r} = (x, y, z)$$
 
+### 1.2 Final results:
 The finial contour plot with different parameters can be shown in the following figure:
 ![energy figure](../imgs/energy_surface.png)
 
-### 1.2 Hydrogen molecule:
+## 2. QMC for ground state of hydrogen molecule
