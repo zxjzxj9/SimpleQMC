@@ -23,3 +23,5 @@ $$ \mathbf{r} = (x, y, z)$$
 
 The finial contour plot with different parameters can be shown in the following figure:
 ![energy figure](../imgs/energy_surface.png)
+
+### 1.2 Hydrogen molecule:
