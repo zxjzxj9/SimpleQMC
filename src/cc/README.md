@@ -26,3 +26,28 @@ The finial contour plot with different parameters can be shown in the following 
 ![energy figure](../imgs/energy_surface.png)
 
 ## 2. QMC for ground state of hydrogen molecule
+
+### 2.1 Hydrogen molecule with simple Jastrow factor
+Consider the wave function in the following form, where r12 is the distance between two electron.
+
+$$\psi_J(\mathbf{r_1}, \mathbf{r_2}) = e^{-u(r_{12})}$$
+
+$$u(r) = \frac{F}{2(1+r/F)}$$
+$$\nabla u(r) = -\frac{\mathbf{r}}{r} \frac{1}{2(1+r/F)^2}$$
+$$\nabla^2 u(r) = - \frac{1}{r}\frac{1}{2(1+r/F)^3} $$
+
+Suppose our wave function has the following form,
+
+$$ \Psi(\mathbf{r_1}, \mathbf{r_2}) = \psi_D(\mathbf{r_1}, \mathbf{r_2}) \psi_J(\mathbf{r_1}, \mathbf{r_2}) $$
+
+For functions only involve with the one-electron coordinates (and singlet ground state), we have
+
+$$\psi_D(\mathbf{r_1}, \mathbf{r_2}) = \psi(\mathbf{r_1}) \psi(\mathbf{r_2}) $$
+
+For the variational trial wave function, there is VB form,
+
+$$  \psi(\mathbf{r}) = \phi(\mathbf{r} - \mathbf{R_1}) \phi(\mathbf{r} - \mathbf{R_2}) $$
+
+And MO form, 
+
+$$ \psi(\mathbf{r}) = \phi(\mathbf{r} - \mathbf{R_1}) + \phi(\mathbf{r} - \mathbf{R_2}) $$
