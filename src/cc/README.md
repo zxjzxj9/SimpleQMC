@@ -4,7 +4,7 @@
 
 ### 1.1 Theoretical backgrounds:
 If we use the following trial function:
-$$\psi(r) = (c r+1) e^{-\alpha r}$$
+$$\psi(r) = (1+cr) e^{-\alpha r}$$
 
 The the ration of the probabilty density at two different sites r1 and r2 becomes:
 
@@ -62,7 +62,11 @@ $$\hat{H}_{ee} = \frac{1}{|\mathbf{r_1} - \mathbf{r_2}|} $$
 
 $$\hat{H}_{pp} = \frac{1}{|\mathbf{R_1} - \mathbf{R_2}|} $$
 
-$$ \frac{\nabla^2 \Psi(\mathbf{r_1}, \mathbf{r_2})}{\Psi(\mathbf{r_1}, \mathbf{r_2})} = \frac{\nabla^2\psi_J(\mathbf{r_1}, \mathbf{r_2})}{\psi_J(\mathbf{r_1}, \mathbf{r_2})} + \frac{\nabla^2\psi_D(\mathbf{r_1}, \mathbf{r_2})}{\psi_D(\mathbf{r_1}, \mathbf{r_2})} $$
+$$ \frac{\nabla^2 \Psi(\mathbf{r_1}, \mathbf{r_2})}{\Psi(\mathbf{r_1}, \mathbf{r_2})} = \sum_{i=1,2} \frac{\nabla_i^2\psi_J(\mathbf{r_1}, \mathbf{r_2})}{\psi_J(\mathbf{r_1}, \mathbf{r_2})} + \frac{\nabla_i^2\psi_D(\mathbf{r_1}, \mathbf{r_2})}{\psi_D(\mathbf{r_1}, \mathbf{r_2})} + 2 \frac{\nabla_i\psi_J(\mathbf{r_1}, \mathbf{r_2})}{\psi_J(\mathbf{r_1}, \mathbf{r_2})} \cdot \frac{\nabla_i\psi_D(\mathbf{r_1}, \mathbf{r_2})}{\psi_D(\mathbf{r_1}, \mathbf{r_2})}  $$
 
-$$\left\{-2 (c r+1) (\alpha +c (\alpha  r-1)) e^{\alpha  (-2 r+\text{R1}+\text{R2})},0,0\right\}$$
+If we have the trial wave function,
+$$\phi(r, \theta, \phi) = (1+cr)e^{-\alpha r}$$
+While there is the following formula (in VB case),
+$$\nabla \psi = \left[-2 (c r+1) (\alpha +c (\alpha  r-1)) e^{\alpha  (-2 r+\text{R1}+\text{R2})},0,0\right]$$
+$$\nabla^2 \psi = $$
 

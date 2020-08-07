@@ -8,5 +8,6 @@ wavefnVB[r_, \[Theta]_, \[Phi]_] = wavefn[r, \[Theta]_, \[Phi]_, R1]*wavefn[r, \
 wavefnMO[r_, \[Theta]_, \[Phi]_] = wavefn[r, \[Theta]_, \[Phi]_, R1] + wavefn[r, \[Theta]_, \[Phi]_, R2];
 
 gradwavefnVB = Grad[wavefnVB[r, \[Theta], \[Phi]], {r, \[Theta], \[Phi]}, "Spherical"];
-
-Print[ToString[TeXForm[FullSimplify[gradwavefnVB]]]]
+laplacianwavefnVB = Laplacian[wavefnVB[r, \[Theta], \[Phi]], {r, \[Theta], \[Phi]}, "Spherical"];
+Print[ToString[TeXForm[FullSimplify[gradwavefnVB]]]];
+Print[ToString[TeXForm[FullSimplify[laplacianwavefnVB]]]];
