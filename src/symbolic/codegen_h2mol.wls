@@ -1,13 +1,13 @@
 
-wavefn[r_, \[Theta]_, \[Phi]_, R_] = (1+c*r)*Exp[-\[Alpha]*(r-R)];
+wavefn[x_, y_, z_, R_] = (1+c*Sqrt[(x-R)^2+y^2+z^2])*Exp[-\[Alpha]*Sqrt[(x-R)^2+y^2+z^2]];
 
 (* Wave function VB *)
-wavefnVB[r_, \[Theta]_, \[Phi]_] = wavefn[r, \[Theta]_, \[Phi]_, R1]*wavefn[r, \[Theta]_, \[Phi]_, R2];
+wavefnVB[x_, y_, z_] = wavefn[x, y, z, R]*wavefn[x, y, z, -R];
 
 (* Wave function MO*)
-wavefnMO[r_, \[Theta]_, \[Phi]_] = wavefn[r, \[Theta]_, \[Phi]_, R1] + wavefn[r, \[Theta]_, \[Phi]_, R2];
+wavefnVB[x_, y_, z_] = wavefn[x, y, z, R]+wavefn[x, y, z, -R];
 
-gradwavefnVB = Grad[wavefnVB[r, \[Theta], \[Phi]], {r, \[Theta], \[Phi]}, "Spherical"];
-laplacianwavefnVB = Laplacian[wavefnVB[r, \[Theta], \[Phi]], {r, \[Theta], \[Phi]}, "Spherical"];
+gradwavefnVB = Grad[wavefnVB[x, y, z], {x, y, z}];
+laplacianwavefnVB = Laplacian[wavefnVB[x, y, z], {x, y, z}];
 Print[ToString[TeXForm[FullSimplify[gradwavefnVB]]]];
 Print[ToString[TeXForm[FullSimplify[laplacianwavefnVB]]]];

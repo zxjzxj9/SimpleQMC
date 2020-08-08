@@ -68,5 +68,7 @@ If we have the trial wave function,
 $$\phi(r, \theta, \phi) = (1+cr)e^{-\alpha r}$$
 While there is the following formula (in VB case),
 $$\nabla \psi = \left[-2 (c r+1) (\alpha +c (\alpha  r-1)) e^{\alpha  (-2 r+\text{R1}+\text{R2})},0,0\right]$$
-$$\nabla^2 \psi = $$
+$$\nabla^2 \psi =  $$
 
+
+$$\left\{\frac{c (x-R) e^{\alpha  \left(-\sqrt{(R-x)^2+y^2+z^2}\right)}}{\sqrt{(R-x)^2+y^2+z^2}}+\frac{\alpha  (R-x) \left(c \sqrt{(R-x)^2+y^2+z^2}+1\right) e^{\alpha  \left(-\sqrt{(R-x)^2+y^2+z^2}\right)}}{\sqrt{(R-x)^2+y^2+z^2}}-\frac{\alpha  (R+x) \left(c r_1+1\right) e^{\alpha  \left(-r_1\right)}}{r_1}+\frac{c (R+x) e^{\alpha  \left(-r_1\right)}}{r_1},c y \left(e^{\alpha  \left(-\sqrt{(R-x)^2+y^2+z^2}\right)} \left(\frac{1}{\sqrt{(R-x)^2+y^2+z^2}}-\alpha \right)+e^{\alpha  \left(-r_1\right)} \left(\frac{1}{r_1}-\alpha \right)\right)+\alpha  y \left(-\frac{e^{\alpha  \left(-r_1\right)}}{r_1}-\frac{e^{\alpha  \left(-\sqrt{(R-x)^2+y^2+z^2}\right)}}{\sqrt{(R-x)^2+y^2+z^2}}\right),c z \left(e^{\alpha  \left(-\sqrt{(R-x)^2+y^2+z^2}\right)} \left(\frac{1}{\sqrt{(R-x)^2+y^2+z^2}}-\alpha \right)+e^{\alpha  \left(-r_1\right)} \left(\frac{1}{r_1}-\alpha \right)\right)+\alpha  z \left(-\frac{e^{\alpha  \left(-r_1\right)}}{r_1}-\frac{e^{\alpha  \left(-\sqrt{(R-x)^2+y^2+z^2}\right)}}{\sqrt{(R-x)^2+y^2+z^2}}\right)\right\}$$
