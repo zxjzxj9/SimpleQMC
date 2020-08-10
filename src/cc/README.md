@@ -71,3 +71,9 @@ We have the following formula,
 $$ \nabla \phi(r) = (c-\alpha  (c r+1))  e^{-\alpha r} \frac{\mathbf{r}}{r}$$
 
 $$ \nabla^2 \phi(r) = \frac{ (c (\alpha  r (\alpha  r-4)+2)+\alpha  (\alpha  r-2))}{r} e^{-\alpha r} $$
+
+While
+$$\frac{\nabla \psi_D(\mathbf{r_1}, \mathbf{r_2})}{\psi_D(\mathbf{r_1}, \mathbf{r_2})} = \frac{\nabla \psi(\mathbf{r_1})}{\psi(\mathbf{r_1})} + \frac{\nabla \psi(\mathbf{r_2})}{\psi(\mathbf{r_2})} $$
+
+and
+$$\nabla^2 \psi_D(\mathbf{r_1}, \mathbf{r_2}) = \psi(\mathbf{r_2}) \nabla^2 \psi(\mathbf{r_1}) + \psi(\mathbf{r_1}) \nabla^2 \psi(\mathbf{r_2}) $$

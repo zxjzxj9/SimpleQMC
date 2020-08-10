@@ -6,7 +6,6 @@ template<typename T>
 class H2MolQMC {
 public:
     H2MolQMC() {
-                
     };
 
     std::pair<T, T> sample(int maxstep=10000) {
