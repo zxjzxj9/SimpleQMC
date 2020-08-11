@@ -76,4 +76,4 @@ While
 $$\frac{\nabla \psi_D(\mathbf{r_1}, \mathbf{r_2})}{\psi_D(\mathbf{r_1}, \mathbf{r_2})} = \frac{\nabla \psi(\mathbf{r_1})}{\psi(\mathbf{r_1})} + \frac{\nabla \psi(\mathbf{r_2})}{\psi(\mathbf{r_2})} $$
 
 and
-$$\nabla^2 \psi_D(\mathbf{r_1}, \mathbf{r_2}) = \psi(\mathbf{r_2}) \nabla^2 \psi(\mathbf{r_1}) + \psi(\mathbf{r_1}) \nabla^2 \psi(\mathbf{r_2}) $$
+$$\frac{\nabla^2 \psi_D(\mathbf{r_1}, \mathbf{r_2})}{\psi_D(\mathbf{r_1}, \mathbf{r_2})} = \frac{\nabla^2 \psi(\mathbf{r_1})}{\psi(\mathbf{r_1}) } + \frac{\nabla^2 \psi(\mathbf{r_2})}{\psi(\mathbf{r_2}) } + 2\frac{\nabla\psi(\mathbf{r_1})}{\psi(\mathbf{r_1}) } \cdot \frac{\nabla \psi(\mathbf{r_2})}{\psi(\mathbf{r_2}) } $$
