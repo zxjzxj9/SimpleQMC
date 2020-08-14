@@ -4,6 +4,7 @@
 
 template<typename T>
 class WaveFn {
+public:
     // return the value of wave function
     virtual T operator()(Eigen::Matrix<T, 1, 3>) = 0;
 
@@ -13,6 +14,27 @@ class WaveFn {
     // return laplacian of the wave function
     virtual T laplace(Eigen::Matrix<T, 1, 3>) = 0;
 
+};
+
+// Simple Wave function $$\phi(r) = (1+cr)e^{-\alpha r}$$
+template <typename T>
+class AtomicWaveFn: public WaveFn {
+public:
+    AtomicWaveFn(T c, T alpha): c(c), alpha(alpha) {};
+
+    virtual T operator()(Eigen::Matrix<T, 3, 1> coord) {
+        auto r = coord.norm();
+        return (1+c*r)*std::exp(-alpha*r);
+    }
+
+    virtual T Eigen::Matrix<T, 1, 3> grad(Eigen::Matrix<T, 1, 3> coord)  {
+        auto r = coord.norm();
+        auto coeff = (1-alpha*(c*r+1))*std::exp(-alpha*r);
+        return coeff*coord.normalized();
+    }
+
+private:
+    T c, alpha;
 };
 
 template<typename T, typename wfn>
