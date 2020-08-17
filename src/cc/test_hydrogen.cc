@@ -6,7 +6,7 @@
 template<typename T, typename Fn> 
 Eigen::Matrix<T, 1, 3> gradient(Eigen::Matrix<T, 1, 3> p, Fn func) {
     const T eps = 1e-6;
-    // +2h +h -h -2h
+    // +2h +h -h -2h, and divide by 12
     T coeff[] = {-1, 8, -8, 1};
 }
 
