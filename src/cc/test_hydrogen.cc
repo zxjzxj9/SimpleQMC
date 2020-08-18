@@ -18,17 +18,31 @@ Eigen::Matrix<T, 1, 3> gradient(Eigen::Matrix<T, 1, 3> p, Fn func) {
         return ret/12.0;
     };
 
-    T delta = 1e-6
     Eigen::Matrix<T, 1, 3> dx;
-    dx << delta << 0.0 << 0.0;
+    dx << eps << 0.0 << 0.0;
     Eigen::Matrix<T, 1, 3> dy;
-    dy << 0.0 << delta << 0.0;
+    dy << 0.0 << eps << 0.0;
     Eigen::Matrix<T, 1, 3> dz;
-    dz << 0.0 << 0.0 << delta;
+    dz << 0.0 << 0.0 << eps;
 
     Matrix<T, 1, 3> ret;
     ret << dfunc(dx) << dfunc(dy) << dfunc(dz);
     return ret;
+}
+
+TEST(SimpleGradientTEST, Gradient) {
+    auto func = [](Eigen::Matrix<double, 1, 3> p) {
+        auto p_sq = p.pow(2.0);
+        return p_sq.sum();
+    };
+    auto dfunc = [](Eigen::Matrix<double, 1, 3> p) {
+        return 2.0*p;
+    };
+
+    auto p = Eigen::Matrix<double, 1, 3>::Random();
+    auto nderv = gradient<double, decltype(func)>(p, func);
+    auto derv = dfunc(p);
+    ASSERT_DOUBLE_EQ((nderv - derv).norm(), 0.0);
 }
 
 TEST(AtomicWaveFnTEST, Gradient) {
