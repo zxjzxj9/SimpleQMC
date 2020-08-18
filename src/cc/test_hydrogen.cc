@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "hydrogen.hpp"
+//#include <unsupported/Eigen/MatrixFunctions>
 
 // Given the function, return the graidents 
 // w.r.t. the coordinates
@@ -25,7 +26,7 @@ Eigen::Matrix<T, 1, 3> gradient(Eigen::Matrix<T, 1, 3> p, Fn func) {
     Eigen::Matrix<T, 1, 3> dz;
     dz << 0.0 << 0.0 << eps;
 
-    Matrix<T, 1, 3> ret;
+    Eigen::Matrix<T, 1, 3> ret;
     ret << dfunc(dx) << dfunc(dy) << dfunc(dz);
     return ret;
 }
@@ -40,18 +41,18 @@ TEST(SimpleGradientTEST, Gradient) {
     };
 
     auto p = Eigen::Matrix<double, 1, 3>::Random();
-    auto nderv = gradient<double, decltype(func)>(p, func);
+    auto nderv = gradient(p, func);
     auto derv = dfunc(p);
     ASSERT_DOUBLE_EQ((nderv - derv).norm(), 0.0);
 }
 
-TEST(AtomicWaveFnTEST, Gradient) {
+//TEST(AtomicWaveFnTEST, Gradient) {
     // ASSERT_DOUBLE_EQ()
-}
+//}
 
-TEST(AtomicWaveFnTEST, Laplace) {
-
-}
+//TEST(AtomicWaveFnTEST, Laplace) {
+//
+//}
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);

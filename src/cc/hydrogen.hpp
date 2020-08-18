@@ -18,7 +18,7 @@ public:
 
 // Simple Wave function $$\phi(r) = (1+cr)e^{-\alpha r}$$
 template <typename T>
-class AtomicWaveFn: public WaveFn {
+class AtomicWaveFn: public WaveFn<T> {
 public:
     AtomicWaveFn(T c, T alpha): c(c), alpha(alpha) {};
 
@@ -27,7 +27,7 @@ public:
         return (1+c*r)*std::exp(-alpha*r);
     }
 
-    virtual T Eigen::Matrix<T, 1, 3> grad(Eigen::Matrix<T, 1, 3> coord)  {
+    virtual Eigen::Matrix<T, 1, 3> grad(Eigen::Matrix<T, 1, 3> coord)  {
         auto r = coord.norm();
         auto coeff = (1-alpha*(c*r+1))*std::exp(-alpha*r);
         return coeff*coord.normalized();
