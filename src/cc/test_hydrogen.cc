@@ -20,14 +20,14 @@ Eigen::Matrix<T, 1, 3> gradient(Eigen::Matrix<T, 1, 3> p, Fn func) {
     };
 
     Eigen::Matrix<T, 1, 3> dx;
-    dx << eps << 0.0 << 0.0;
+    dx << eps, 0.0, 0.0;
     Eigen::Matrix<T, 1, 3> dy;
-    dy << 0.0 << eps << 0.0;
+    dy << 0.0, eps, 0.0;
     Eigen::Matrix<T, 1, 3> dz;
-    dz << 0.0 << 0.0 << eps;
+    dz << 0.0, 0.0, eps;
 
     Eigen::Matrix<T, 1, 3> ret;
-    ret << dfunc(dx) << dfunc(dy) << dfunc(dz);
+    ret << dfunc(dx), dfunc(dy), dfunc(dz);
     return ret;
 }
 
@@ -41,7 +41,7 @@ TEST(SimpleGradientTEST, Gradient) {
         return 2.0*p;
     };
 
-    auto p = Eigen::Matrix<double, 1, 3>::Random();
+    Eigen::Matrix<double, 1, 3> p = Eigen::Matrix<double, 1, 3>::Random();
     auto nderv = gradient(p, func);
     auto derv = dfunc(p);
     ASSERT_DOUBLE_EQ((nderv - derv).norm(), 0.0);
