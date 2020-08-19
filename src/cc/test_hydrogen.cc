@@ -32,10 +32,11 @@ Eigen::Matrix<T, 1, 3> gradient(Eigen::Matrix<T, 1, 3> p, Fn func) {
 }
 
 TEST(SimpleGradientTEST, Gradient) {
-    auto func = [](Eigen::Matrix<double, 1, 3> p) {
-        auto p_sq = p.pow(2.0);
+    auto func = [](Eigen::Matrix<double, 1, 3>  p) {
+        auto p_sq = p.array().pow(2);
         return p_sq.sum();
     };
+
     auto dfunc = [](Eigen::Matrix<double, 1, 3> p) {
         return 2.0*p;
     };

@@ -37,7 +37,7 @@ private:
     T c, alpha;
 };
 
-template<typename T, typename wfn>
+template<typename T> //, typename wfn>
 class H2MolQMC {
 public:
     H2MolQMC() {
