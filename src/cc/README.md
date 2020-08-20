@@ -81,13 +81,12 @@ $$\frac{\nabla_i^2 \psi_D(\mathbf{r_1}, \mathbf{r_2})}{\psi_D(\mathbf{r_1}, \mat
 
 In VB case,
 
-$$ \frac{\nabla_i \psi(\mathbf{r_i})}{\psi(\mathbf{r_i})} = \frac{\nabla_i \phi(\mathbf{r_i-R_1})}{\phi(\mathbf{r_i-R_1})} + \frac{\nabla_i \phi(\mathbf{r_i-R_2})}{\phi(\mathbf{r_i-R_2})}$$
+$$ \frac{\nabla_i \psi(\mathbf{r_i})}{\psi(\mathbf{r_i})} = \frac{\nabla_i \phi(\mathbf{r_i-R_1})}{\phi(\mathbf{r_i-R_1})} + \frac{\nabla_i \phi(\mathbf{r_i-R_2})}{\phi(\mathbf{r_i-R_2})} $$
 
 $$ \frac{\nabla_i^2 \psi(\mathbf{r_i})}{\psi(\mathbf{r_i})} = \frac{\nabla_i^2 \phi(\mathbf{r_i-R_1})}{\phi(\mathbf{r_i-R_1})} + \frac{\nabla_i^2 \phi(\mathbf{r_i-R_2})}{\phi(\mathbf{r_i-R_2})} + \frac{\nabla_i \phi(\mathbf{r_i-R_1})}{\phi(\mathbf{r_i-R_1})} \cdot \frac{\nabla_i \phi(\mathbf{r_i-R_2})}{\phi(\mathbf{r_i-R_2})} $$
 
 In MO case,
 
-$$ \frac{\nabla_i \psi(\mathbf{r_i})}{\psi(\mathbf{r_i})} = \frac{\nabla_i \phi(\mathbf{r_i-R_1}) + \nabla_i \phi(\mathbf{r_i-R_2}) }{\phi(\mathbf{r_i-R_1}) + \phi(\mathbf{r_i-R_2})}$$
+$$ \frac{\nabla_i \psi(\mathbf{r_i})}{\psi(\mathbf{r_i})} = \frac{\nabla_i \phi(\mathbf{r_i-R_1}) + \nabla_i \phi(\mathbf{r_i-R_2}) }{\phi(\mathbf{r_i-R_1}) + \phi(\mathbf{r_i-R_2})} $$
 
-$$ \frac{\nabla_i \psi(\mathbf{r_i})}{\psi(\mathbf{r_i})} = \frac{\nabla_i^2 \phi(\mathbf{r_i-R_1}) + \nabla_i^2 \phi(\mathbf{r_i-R_2}) }{\phi(\mathbf{r_i-R_1}) + \phi(\mathbf{r_i-R_2})}
-$$
+$$ \frac{\nabla_i \psi(\mathbf{r_i})}{\psi(\mathbf{r_i})} = \frac{\nabla_i^2 \phi(\mathbf{r_i-R_1}) + \nabla_i^2 \phi(\mathbf{r_i-R_2}) }{\phi(\mathbf{r_i-R_1}) + \phi(\mathbf{r_i-R_2})} $$
