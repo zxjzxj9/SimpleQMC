@@ -11,7 +11,7 @@ Eigen::Matrix<T, 1, 3> gradient(Eigen::Matrix<T, 1, 3> p, Fn func) {
     T coeff[] = {-1, 8, -8, 1};
     T ds[] = {+2, +1, -1, -2};
 
-    auto dfunc = [&](Eigen::Matrix<T, 1, 3>& dp){
+    auto dfunc = [&](const Eigen::Matrix<T, 1, 3>& dp){
         T ret = 0.0;
         for(int i=0; i<4; i++) {
             ret += coeff[i]*func(p+ds[i]*dp);
@@ -32,11 +32,11 @@ Eigen::Matrix<T, 1, 3> gradient(Eigen::Matrix<T, 1, 3> p, Fn func) {
 }
 
 TEST(SimpleGradientTEST, Gradient) {
-    auto func = [](Eigen::Matrix<double, 1, 3>&& p) {
+    auto func = [](const Eigen::Matrix<double, 1, 3>& p) {
         return p.array().pow(2).sum();
     };
 
-    auto dfunc = [](Eigen::Matrix<double, 1, 3>& p) {
+    auto dfunc = [](const Eigen::Matrix<double, 1, 3>& p) {
         auto ret = 2.0*p;
         return ret;
     };

@@ -5,14 +5,15 @@
 template<typename T>
 class WaveFn {
 public:
+    using PCoord = Eigen::Matrix<T, 1, 3>;
     // return the value of wave function
-    virtual T operator()(Eigen::Matrix<T, 1, 3>) = 0;
+    virtual T operator()(const PCoord&) = 0;
 
     // return three components of grad wave function
-    virtual Eigen::Matrix<T, 1, 3> grad(Eigen::Matrix<T, 1, 3>) = 0;
+    virtual PCoord grad(const PCoord&) = 0;
     
     // return laplacian of the wave function
-    virtual T laplace(Eigen::Matrix<T, 1, 3>) = 0;
+    virtual T laplace(const PCoord&) = 0;
 
 };
 
@@ -20,14 +21,15 @@ public:
 template <typename T>
 class AtomicWaveFn: public WaveFn<T> {
 public:
+    using PCoord = Eigen::Matrix<T, 1, 3>;
     AtomicWaveFn(T c, T alpha): c(c), alpha(alpha) {};
 
-    virtual T operator()(Eigen::Matrix<T, 3, 1> coord) {
+    T operator()(const PCoord& coord) {
         auto r = coord.norm();
         return (1+c*r)*std::exp(-alpha*r);
     }
 
-    virtual Eigen::Matrix<T, 1, 3> grad(Eigen::Matrix<T, 1, 3> coord)  {
+    PCoord grad(const PCoord& coord)  {
         auto r = coord.norm();
         auto coeff = (1-alpha*(c*r+1))*std::exp(-alpha*r);
         return coeff*coord.normalized();
