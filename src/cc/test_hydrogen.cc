@@ -5,7 +5,7 @@
 // Given the function, return the graidents 
 // w.r.t. the coordinates
 template<typename T, typename Fn> 
-Eigen::Matrix<T, 1, 3> gradient(Eigen::Matrix<T, 1, 3> p, Fn func) {
+Eigen::Matrix<T, 1, 3> gradient(const Eigen::Matrix<T, 1, 3>& p, Fn func) {
     const T eps = 1e-6;
     // +2h +h -h -2h, and divide by 12
     T coeff[] = {-1, 8, -8, 1};
@@ -31,6 +31,24 @@ Eigen::Matrix<T, 1, 3> gradient(Eigen::Matrix<T, 1, 3> p, Fn func) {
     return ret;
 }
 
+// Given the function, return the laplacian
+// w.r.t. the coordinates
+template<typename T, typename Fn>
+T laplace(const Eigen::Matrix<T, 1, 3>& p, Fn func) {
+    const T eps = 1e-6;
+
+    Eigen::Matrix<T, 1, 3> dx;
+    dx << eps, 0.0, 0.0;
+    Eigen::Matrix<T, 1, 3> dy;
+    dy << 0.0, eps, 0.0;
+    Eigen::Matrix<T, 1, 3> dz;
+    dz << 0.0, 0.0, eps;
+
+    return (func(p+dx) + func(p-dx) + 
+            func(p+dy) + func(p-dy) + 
+            func(p+dz) + func(p-dz) - 6*func(p))/(eps*eps);
+}
+
 TEST(SimpleGradientTEST, Gradient) {
     auto func = [](const Eigen::Matrix<double, 1, 3>& p) {
         return p.array().pow(2).sum();
@@ -48,6 +66,18 @@ TEST(SimpleGradientTEST, Gradient) {
     auto derv = dfunc(p);
     // std::cout<<derv<<std::endl;
     ASSERT_NEAR((nderv - derv).norm(), 0.0, 1e-6);
+}
+
+TEST(SimpleLaplacianTEST, Laplacian) {
+    auto func = [](const Eigen::Matrix<double, 1, 3>& p) {
+        return p.array().pow(2).sum();
+    };
+
+    Eigen::Matrix<double, 1, 3> p = Eigen::Matrix<double, 1, 3>::Random();
+    double nderv2 = laplace(p, func);
+    double derv2 = 6.0;
+
+    ASSERT_NEAR(nderv2, derv2, 1e-2);
 }
 
 //TEST(AtomicWaveFnTEST, Gradient) {
