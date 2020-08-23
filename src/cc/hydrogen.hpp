@@ -26,17 +26,21 @@ public:
 
     T operator()(const PCoord& coord) {
         auto r = coord.norm();
-        return (1+c*r)*std::exp(-alpha*r);
+        auto ar = alpha*r;
+        return (1+c*r)*std::exp(-ar);
     }
 
     PCoord grad(const PCoord& coord) {
         auto r = coord.norm();
-        auto coeff = (1-alpha*(c*r+1))*std::exp(-alpha*r);
+        auto ar = alpha*r;
+        auto coeff = (1-alpha*(c*r+1))*std::exp(-ar);
         return coeff*coord.normalized();
     }
 
     T laplace(const Pcoord& coord) {
-        return 0;
+        auto r = coord.norm();
+        auto ar = alpha*r;
+        return (c*(ar*(ar-4)+2) + alpha*(ar-2))*std::exp(-ar)/r;
     }
 
 private:
