@@ -29,10 +29,14 @@ public:
         return (1+c*r)*std::exp(-alpha*r);
     }
 
-    PCoord grad(const PCoord& coord)  {
+    PCoord grad(const PCoord& coord) {
         auto r = coord.norm();
         auto coeff = (1-alpha*(c*r+1))*std::exp(-alpha*r);
         return coeff*coord.normalized();
+    }
+
+    T laplace(const Pcoord& coord) {
+        return 0;
     }
 
 private:
