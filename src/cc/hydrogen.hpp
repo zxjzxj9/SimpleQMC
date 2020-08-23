@@ -37,7 +37,7 @@ public:
         return coeff*coord.normalized();
     }
 
-    T laplace(const Pcoord& coord) {
+    T laplace(const PCoord& coord) {
         auto r = coord.norm();
         auto ar = alpha*r;
         return (c*(ar*(ar-4)+2) + alpha*(ar-2))*std::exp(-ar)/r;
