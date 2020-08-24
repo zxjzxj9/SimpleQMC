@@ -47,6 +47,37 @@ private:
     T c, alpha;
 };
 
+// Composed Wave functions
+template<typename T>
+class VBWaveFn: public WaveFn<T> {
+public:
+    using PCoord = Eigen::Matrix<T, 1, 3>;
+    VBWaveFn(T c, T alpha, const PCoord& R1, const PCoord& R2): 
+        c(c), alpha(alpha), R1(R1), R2(R2), 
+        phi1(c, alpha), phi2(c, alpha) {};
+
+    T operator()(const PCoord& r) {
+        return phi1(r-R1)*phi2(r-R2);
+    }
+    
+    PCoord grad(const PCoord& r) {
+        return phi2(r-R2)*phi1.grad(r-R1) + 
+               phi1(r-R1)*phi2.grad(r-R2);
+    }
+
+    T laplace(const PCoord& r) {
+        return phi2(r-R2)*phi1.laplace(r-R1) + 
+               phi1(r-R1)*phi2.laplace(r-R2) +
+               (phi1.grad(r-R1) * phi2.grad(r-R1)).array().sum();
+    }
+
+private:
+    T c, alpha;
+    PCoord R1, R2;
+    AtomicWaveFn<T> phi1, phi2;
+};
+
+
 template<typename T> //, typename wfn>
 class H2MolQMC {
 public:
