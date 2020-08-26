@@ -104,6 +104,33 @@ private:
     AtomicWaveFn<T> phi1, phi2;
 };
 
+// Define Jastrow wavefunction
+template<typename T>
+class Jastrow: public WaveFn<T> {
+    using PCoord = Eigen::Matrix<T, 1, 3>;
+public:
+    Jastrow(T factor): factor(factor) {}
+
+    T operator()(const PCoord& r1, const PCoord& r2) {
+        auto r12 = (r1 - r2).norm();
+        return factor/(2 + 2*r12/factor);
+    }
+
+    PCoord grad(const PCoord& r1, const PCoord& r2) {
+        auto r12 = r1 - r2;
+        auto r = r12.norm();
+        return -r12/(2*r*std::pow(1+r/factor, 2));
+    }
+
+    T laplace(const PCoord& r1, const PCoord& r2) {
+        auto r12 = (r1 - r2).norm();
+        return -1/(2*r12*std::pow(1+r12/factor, 3)); 
+    }
+private:
+    T factor;
+
+};
+
 
 template<typename T> //, typename wfn>
 class H2MolQMC {
