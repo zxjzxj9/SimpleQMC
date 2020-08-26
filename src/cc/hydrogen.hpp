@@ -2,6 +2,15 @@
 #include <fmt/core.h>
 #include <Eigen/Dense>
 
+enum JastrowType {
+    SIMPLE_JASTROW,
+};
+
+enum AtomicWfnType {
+    VB,
+    MO,
+};
+
 template<typename T>
 class WaveFn {
 public:
