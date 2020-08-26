@@ -140,6 +140,16 @@ private:
 
 };
 
+template<typename T, JastrowType Jastrow, AtomicWfnType AtomicWfn>
+class H2Mol {
+    const JastrowType jastrow = Jastrow;
+    const AtomicWfnType atomicwfn = AtomicWfn;
+
+
+    
+};
+
+
 
 template<typename T> //, typename wfn>
 class H2MolQMC {
