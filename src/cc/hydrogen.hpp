@@ -115,10 +115,10 @@ private:
 
 // Define Jastrow wavefunction
 template<typename T>
-class Jastrow: public WaveFn<T> {
+class JastrowWfn: public WaveFn<T> {
     using PCoord = Eigen::Matrix<T, 1, 3>;
 public:
-    Jastrow(T factor): factor(factor) {}
+    JastrowWfn(T factor): factor(factor) {}
 
     T operator()(const PCoord& r1, const PCoord& r2) {
         auto r12 = (r1 - r2).norm();
@@ -142,11 +142,41 @@ private:
 
 template<typename T, JastrowType Jastrow, AtomicWfnType AtomicWfn>
 class H2Mol {
-    const JastrowType jastrow = Jastrow;
-    const AtomicWfnType atomicwfn = AtomicWfn;
 
+public:
+    const JastrowType jastrow_type = Jastrow;
+    const AtomicWfnType atomicwfn_type = AtomicWfn;
+    using PCoord = Eigen::Matrix<T, 1, 3>;
 
-    
+    H2Mol(T factor, T c, T alpha, PCoord& R1, PCoord& R2) {
+        switch (Jastrow) {
+            case JastrowType::SIMPLE_JASTROW:
+                jastrow = new JastrowWfn<T>(factor);
+                break;
+            default:
+                throw std::runtime_error("Invalid jastrow function.");
+                break;
+        }
+
+        switch(AtomicWfn) {
+            case AtomicWfnType::MO:
+                break;
+            case AtomicWfnType::VB:
+                break;
+            default:
+                throw std::runtime_error("Invalid atomic wave function");
+                break;
+        }
+    }
+
+    ~H2Mol() {
+        delete jastrow;
+        delete atomicwfn;
+    }
+
+private:
+    WaveFn<T>* jastrow = nullptr;
+    WaveFn<T>* atomicwfn = nullptr;
 };
 
 
