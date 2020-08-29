@@ -80,6 +80,16 @@ TEST(SimpleLaplacianTEST, Laplacian) {
     ASSERT_NEAR(nderv2, derv2, 1e-2);
 }
 
+TEST(AtomicWaveFn, Gradient) {
+    auto wfn = new AtomicWaveFn<double>(0.5, 1.0);
+    auto func = [&](const Eigen::Matrix<double, 1, 3>& p) {
+        return wfn->density(p);
+    };
+    Eigen::Matrix<double, 1, 3> p = Eigen::Matrix<double, 1, 3>::Random(); 
+    auto nderv = gradient(p, func);
+    auto derv = wfn->grad(p);
+    delete wfn;
+}
 //TEST(AtomicWaveFnTEST, Gradient) {
     // ASSERT_DOUBLE_EQ()
 //}
