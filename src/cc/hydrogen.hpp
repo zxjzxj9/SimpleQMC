@@ -16,7 +16,7 @@ class WaveFn {
 public:
     using PCoord = Eigen::Matrix<T, 1, 3>;
     // return the value of wave function
-    virtual T operator()(const PCoord&) = 0;
+    virtual T density(const PCoord&) = 0;
 
     // return three components of grad wave function
     virtual PCoord grad(const PCoord&) = 0;
@@ -33,7 +33,7 @@ public:
     using PCoord = Eigen::Matrix<T, 1, 3>;
     AtomicWaveFn(T c, T alpha): c(c), alpha(alpha) {};
 
-    T operator()(const PCoord& coord) {
+    T density(const PCoord& coord) {
         auto r = coord.norm();
         auto ar = alpha*r;
         return (1+c*r)*std::exp(-ar);
@@ -65,7 +65,7 @@ public:
         c(c), alpha(alpha), R1(R1), R2(R2), 
         phi1(c, alpha), phi2(c, alpha) {};
 
-    T operator()(const PCoord& r) {
+    T density(const PCoord& r) {
         return phi1(r-R1)*phi2(r-R2);
     }
     
@@ -95,7 +95,7 @@ public:
         c(c), alpha(alpha), R1(R1), R2(R2), 
         phi1(c, alpha), phi2(c, alpha) {};
 
-    T operator()(const PCoord& r) {
+    T density(const PCoord& r) {
         return phi1(r-R1)+phi2(r-R2);
     }
     
@@ -120,7 +120,7 @@ class JastrowWfn: public WaveFn<T> {
 public:
     JastrowWfn(T factor): factor(factor) {}
 
-    T operator()(const PCoord& r1, const PCoord& r2) {
+    T density(const PCoord& r1, const PCoord& r2) {
         auto r12 = (r1 - r2).norm();
         return factor/(2 + 2*r12/factor);
     }
@@ -172,6 +172,10 @@ public:
     ~H2Mol() {
         delete jastrow;
         delete atomicwfn;
+    }
+
+    T density(PCoord& r1, PCoord& r2) {
+        return 0.0;
     }
 
 private:
