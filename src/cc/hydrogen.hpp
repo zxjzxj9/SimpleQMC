@@ -160,8 +160,10 @@ public:
 
         switch(AtomicWfn) {
             case AtomicWfnType::MO:
+                atomicwfn = new MOWaveFn<T>(c, alpha, R1, R2);
                 break;
             case AtomicWfnType::VB:
+                atomicwfn = new VBWaveFn<T>(c, alpha, R1, R2);
                 break;
             default:
                 throw std::runtime_error("Invalid atomic wave function");
@@ -175,6 +177,10 @@ public:
     }
 
     T density(PCoord& r1, PCoord& r2) {
+        return jastrow->density()*atomicwfn->density();
+    }
+
+    T laplace(PCoord& r1, PCoord& r2) {
         return 0.0;
     }
 
