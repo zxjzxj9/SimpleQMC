@@ -83,7 +83,7 @@ TEST(SimpleLaplacianTEST, Laplacian) {
 TEST(AtomicWaveFn, Gradient) {
     auto wfn = new AtomicWaveFn<double>(0.5, 1.0);
     auto func = [&](const Eigen::Matrix<double, 1, 3>& p) {
-        return wfn->density(p);
+        return wfn->value(p);
     };
     Eigen::Matrix<double, 1, 3> p = Eigen::Matrix<double, 1, 3>::Random(); 
     auto nderv = gradient(p, func);
