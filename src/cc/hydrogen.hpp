@@ -178,12 +178,14 @@ public:
 
     // Notice this calculate \psi^* \psi
     T density(PCoord& r1, PCoord& r2) {
-        return std::pow(jastrow->value()*atomicwfn->value(), 2);
+        return std::pow(jastrow->value(r1, r2)* \
+               atomicwfn->value(r1)*atomicwfn->value(r2), 2);
     }
 
-    // 
-    T laplace(PCoord& r1, PCoord& r2) {
-        return 0.0;
+    // Calculate the energy with current density
+    T energy(PCoord& r1, PCoord& r2) {
+        T ret = 0.0;
+        return ret;
     }
 
 private:
