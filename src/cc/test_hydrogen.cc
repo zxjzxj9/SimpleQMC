@@ -101,6 +101,7 @@ TEST(AtomicWaveFn, Laplacian) {
     auto nderv2 = laplace(p, func);
     auto derv2 = wfn->laplace(p);
     ASSERT_NEAR(nderv2, derv2, 1e-2);
+    delete wfn;
 }
 
 TEST(VBWaveFn, Gradient) {
@@ -114,6 +115,20 @@ TEST(VBWaveFn, Gradient) {
     auto nderv = gradient(p, func);
     auto derv = wfn->grad(p);
     ASSERT_NEAR((nderv - derv).norm(), 0.0, 1e-6);
+    delete wfn;
+}
+
+TEST(VBWaveFn, Laplacian) {
+    Eigen::Matrix<double, 1, 3> r1 = Eigen::Matrix<double, 1, 3>::Random(); 
+    Eigen::Matrix<double, 1, 3> r2 = Eigen::Matrix<double, 1, 3>::Random(); 
+    auto wfn = new VBWaveFn<double>(0.5, 1.0, r1, r2);
+    auto func = [&](const Eigen::Matrix<double, 1, 3>& p) {
+         return wfn->value(p);
+    };
+    Eigen::Matrix<double, 1, 3> p = Eigen::Matrix<double, 1, 3>::Random(); 
+    auto nderv2 = laplace(p, func);
+    auto derv2 = wfn->laplace(p);
+    ASSERT_NEAR(nderv2, derv2, 1e-2);
     delete wfn;
 }
 

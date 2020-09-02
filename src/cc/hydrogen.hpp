@@ -85,7 +85,7 @@ public:
     T laplace(const PCoord& r) {
         return phi2->value(r-R2)*phi1->laplace(r-R1) + 
                phi1->value(r-R1)*phi2->laplace(r-R2) +
-               (phi1->grad(r-R1)).dot(phi2->grad(r-R1));
+               2*(phi1->grad(r-R1)).dot(phi2->grad(r-R2));
     }
 
 private:
