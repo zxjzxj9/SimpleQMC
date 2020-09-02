@@ -42,7 +42,7 @@ public:
     PCoord grad(const PCoord& coord) {
         auto r = coord.norm();
         auto ar = alpha*r;
-        auto coeff = (1-alpha*(c*r+1))*std::exp(-ar);
+        auto coeff = (c-alpha*(c*r+1))*std::exp(-ar);
         return coeff*coord.normalized();
     }
 
