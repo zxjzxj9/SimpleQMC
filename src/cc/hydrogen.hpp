@@ -101,25 +101,28 @@ class MOWaveFn: public WaveFn<T> {
 public:
     using PCoord = Eigen::Matrix<T, 1, 3>;
     MOWaveFn(T c, T alpha, const PCoord& R1, const PCoord& R2): 
-        c(c), alpha(alpha), R1(R1), R2(R2), 
-        phi1(c, alpha), phi2(c, alpha) {};
+        c(c), alpha(alpha), R1(R1), R2(R2) {
+        phi1 = new AtomicWaveFn<T>(c, alpha);
+        phi2 = new AtomicWaveFn<T>(c, alpha);
+    }
 
     T value(const PCoord& r) {
-        return phi1(r-R1)+phi2(r-R2);
+        return phi1->value(r-R1)+phi2->value(r-R2);
     }
     
     PCoord grad(const PCoord& r) {
-        return phi1.grad(r-R1) + phi2.grad(r-R2);
+        return phi1->grad(r-R1) + phi2->grad(r-R2);
     }
 
     T laplace(const PCoord& r) {
-        return phi1.laplace(r-R1) + phi2.laplace(r-R2);
+        return phi1->laplace(r-R1) + phi2->laplace(r-R2);
     }
 
 private:
     T c, alpha;
     PCoord R1, R2;
-    AtomicWaveFn<T> phi1, phi2;
+    AtomicWaveFn<T>* phi1;
+    AtomicWaveFn<T>* phi2;
 };
 
 // Define Jastrow wavefunction
