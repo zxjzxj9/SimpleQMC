@@ -103,6 +103,20 @@ TEST(AtomicWaveFn, Laplacian) {
     ASSERT_NEAR(nderv2, derv2, 1e-2);
 }
 
+TEST(VBWaveFn, Gradient) {
+    Eigen::Matrix<double, 1, 3> r1 = Eigen::Matrix<double, 1, 3>::Random(); 
+    Eigen::Matrix<double, 1, 3> r2 = Eigen::Matrix<double, 1, 3>::Random(); 
+    auto wfn = new VBWaveFn<double>(0.5, 1.0, r1, r2);
+    auto func = [&](const Eigen::Matrix<double, 1, 3>& p) {
+         return wfn->value(p);
+    };
+    Eigen::Matrix<double, 1, 3> p = Eigen::Matrix<double, 1, 3>::Random(); 
+    auto nderv = gradient(p, func);
+    auto derv = wfn->grad(p);
+    ASSERT_NEAR((nderv - derv).norm(), 0.0, 1e-6);
+    delete wfn;
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

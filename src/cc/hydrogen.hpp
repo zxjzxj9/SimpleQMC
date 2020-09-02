@@ -15,6 +15,7 @@ template<typename T>
 class WaveFn {
 public:
     using PCoord = Eigen::Matrix<T, 1, 3>;
+    virtual ~WaveFn(){};
     // return the value of wave function
     virtual T value(const PCoord&) = 0;
 
@@ -32,6 +33,7 @@ class AtomicWaveFn: public WaveFn<T> {
 public:
     using PCoord = Eigen::Matrix<T, 1, 3>;
     AtomicWaveFn(T c, T alpha): c(c), alpha(alpha) {};
+    ~AtomicWaveFn(){};
 
     T value(const PCoord& coord) {
         auto r = coord.norm();
@@ -62,28 +64,35 @@ class VBWaveFn: public WaveFn<T> {
 public:
     using PCoord = Eigen::Matrix<T, 1, 3>;
     VBWaveFn(T c, T alpha, const PCoord& R1, const PCoord& R2): 
-        c(c), alpha(alpha), R1(R1), R2(R2), 
-        phi1(c, alpha), phi2(c, alpha) {};
+        c(c), alpha(alpha), R1(R1), R2(R2) {
+        phi1 = new AtomicWaveFn<T>(c, alpha);
+        phi2 = new AtomicWaveFn<T>(c, alpha);
+    }
+
+    ~VBWaveFn() {
+        delete phi1, phi2;
+    }
 
     T value(const PCoord& r) {
-        return phi1(r-R1)*phi2(r-R2);
+        return phi1->value(r-R1)*phi2->value(r-R2);
     }
     
     PCoord grad(const PCoord& r) {
-        return phi2(r-R2)*phi1.grad(r-R1) + 
-               phi1(r-R1)*phi2.grad(r-R2);
+        return phi2->value(r-R2)*phi1->grad(r-R1) + 
+               phi1->value(r-R1)*phi2->grad(r-R2);
     }
 
     T laplace(const PCoord& r) {
-        return phi2(r-R2)*phi1.laplace(r-R1) + 
-               phi1(r-R1)*phi2.laplace(r-R2) +
-               (phi1.grad(r-R1) * phi2.grad(r-R1)).array().sum();
+        return phi2->value(r-R2)*phi1->laplace(r-R1) + 
+               phi1->value(r-R1)*phi2->laplace(r-R2) +
+               (phi1->grad(r-R1)).dot(phi2->grad(r-R1));
     }
 
 private:
     T c, alpha;
     PCoord R1, R2;
-    AtomicWaveFn<T> phi1, phi2;
+    AtomicWaveFn<T>* phi1;
+    AtomicWaveFn<T>* phi2;
 };
 
 // Composed Wave functions: MO
