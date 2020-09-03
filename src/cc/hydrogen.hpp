@@ -17,14 +17,13 @@ public:
     using PCoord = Eigen::Matrix<T, 1, 3>;
     virtual ~WaveFn(){};
     // return the value of wave function
-    virtual T value(const PCoord&) = 0;
+    virtual T value(const PCoord&)=0;
 
     // return three components of grad wave function
-    virtual PCoord grad(const PCoord&) = 0;
+    virtual PCoord grad(const PCoord&)=0;
     
     // return laplacian of the wave function
-    virtual T laplace(const PCoord&) = 0;
-
+    virtual T laplace(const PCoord&)=0;
 };
 
 // Simple Wave function $$\phi(r) = (1+cr)e^{-\alpha r}$$
@@ -127,10 +126,13 @@ private:
 
 // Define Jastrow wavefunction
 template<typename T>
-class JastrowWfn: public WaveFn<T> {
+// class JastrowWfn: public WaveFn<T> {
+class JastrowWfn {
     using PCoord = Eigen::Matrix<T, 1, 3>;
 public:
     JastrowWfn(T factor): factor(factor) {}
+
+    ~JastrowWfn() {}
 
     T value(const PCoord& r1, const PCoord& r2) {
         auto r12 = (r1 - r2).norm();
@@ -149,7 +151,6 @@ public:
     }
 private:
     T factor;
-
 };
 
 template<typename T, JastrowType Jastrow, AtomicWfnType AtomicWfn>

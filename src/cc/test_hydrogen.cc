@@ -160,6 +160,26 @@ TEST(MOWaveFn, Laplacian) {
     delete wfn;
 }
 
+TEST(JastrowWfn, Gradient) {
+    Eigen::Matrix<double, 1, 3> r1 = Eigen::Matrix<double, 1, 3>::Random(); 
+    Eigen::Matrix<double, 1, 3> r2 = Eigen::Matrix<double, 1, 3>::Random(); 
+    auto wfn = new JastrowWfn<double>(2.0);
+    auto func1 = [&](const Eigen::Matrix<double, 1, 3>& p) {
+         return wfn->value(p, r2);
+    };
+    auto func2 = [&](const Eigen::Matrix<double, 1, 3>& p) {
+         return wfn->value(r1, p);
+    };
+    Eigen::Matrix<double, 1, 3> p = Eigen::Matrix<double, 1, 3>::Random(); 
+    auto nderv_f1 = gradient(p, func1);
+    auto derv_f1 = wfn->grad(p, r2);
+    auto nderv_f2 = gradient(p, func2);
+    auto derv_f2 = wfn->grad(r1, p);
+    ASSERT_NEAR((nderv_f1 - derv_f1).norm(), 0.0, 1e-6);
+    ASSERT_NEAR((nderv_f2 - derv_f2).norm(), 0.0, 1e-6);
+    delete wfn;
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
