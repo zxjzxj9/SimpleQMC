@@ -166,7 +166,8 @@ public:
     const AtomicWfnType atomicwfn_type = AtomicWfn;
     using PCoord = Eigen::Matrix<T, 1, 3>;
 
-    H2Mol(T factor, T c, T alpha, PCoord& R1, PCoord& R2) {
+    H2Mol(T factor, T c, T alpha, PCoord& R1, PCoord& R2):
+        R1(R1), R2(R2) {
         switch (Jastrow) {
             case JastrowType::SIMPLE_JASTROW:
                 jastrow = new JastrowWfn<T>(factor);
@@ -195,20 +196,41 @@ public:
     }
 
     // Notice this calculate \psi^* \psi
-    T density(PCoord& r1, PCoord& r2) {
+    T density(const PCoord& r1, const PCoord& r2) {
         return std::pow(jastrow->value(r1, r2)* \
                atomicwfn->value(r1)*atomicwfn->value(r2), 2);
     }
 
     // Calculate the energy with current density
-    T energy(PCoord& r1, PCoord& r2) {
+    T energy(const PCoord& r1, const PCoord& r2) {
         T ret = 0.0;
+        PCoord dJdr1, dJdr2;
+        T d2Jdr1, d2Jdr2;
+        auto jval = jastrow->value(r1, r2);
+        std::tie(d2Jdr1, d2Jdr2) = jastrow->laplace(r1, r2);
+        std::tie(dJdr1, dJdr2) = jastrow->grad(r1, r2);
+        ret += (d2Jdr1+d2Jdr2)/jval;
+        auto val1 = atomicwfn->value(r1);
+        auto val2 = atomicwfn->value(r2);
+        ret += atomicwfn->laplace(r1)/val1;
+        ret += atomicwfn->laplace(r2)/val2;
+        
+        ret += 2*dJdr1.dot(atomicwfn->grad(r1))/(jval*val1);
+        ret += 2*dJdr2.dot(atomicwfn->grad(r2))/(jval*val2);
+
+        ret += -1.0/(r1-R1).norm();
+        ret += -1.0/(r1-R2).norm();
+        ret += -1.0/(r2-R1).norm();
+        ret += -1.0/(r2-R2).norm();
+        ret += 1.0/(R1-R2).norm();
+
         return ret;
     }
 
 private:
     WaveFn<T>* jastrow = nullptr;
     WaveFn<T>* atomicwfn = nullptr;
+    PCoord R1, R2;
 };
 
 
