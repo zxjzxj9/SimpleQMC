@@ -139,15 +139,20 @@ public:
         return factor/(2 + 2*r12/factor);
     }
 
-    PCoord grad(const PCoord& r1, const PCoord& r2) {
+    // The gradient is symmetric w.r.t r1 and r2
+    std::pair<PCoord, PCoord> 
+    grad(const PCoord& r1, const PCoord& r2) {
         auto r12 = r1 - r2;
         auto r = r12.norm();
-        return -r12/(2*r*std::pow(1+r/factor, 2));
+        auto v1 = -r12/(2*r*std::pow(1+r/factor, 2));
+        return {v1, -v1};
     }
 
-    T laplace(const PCoord& r1, const PCoord& r2) {
-        auto r12 = (r1 - r2).norm();
-        return -1/(2*r12*std::pow(1+r12/factor, 3)); 
+    std::pair<T, T> 
+    laplace(const PCoord& r1, const PCoord& r2) {
+        auto r = (r1 - r2).norm();
+        auto val = -1/(r*std::pow(1+r/factor, 3)); 
+        return {val, val};
     }
 private:
     T factor;

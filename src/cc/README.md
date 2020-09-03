@@ -34,7 +34,7 @@ $$\psi_J(\mathbf{r_1}, \mathbf{r_2}) = e^{-u(r_{12})}$$
 
 $$u(r) = \frac{F}{2(1+r/F)}$$
 $$\nabla u(r) = -\frac{\mathbf{r}}{r} \frac{1}{2(1+r/F)^2}$$
-$$\nabla^2 u(r) = - \frac{1}{r}\frac{1}{2(1+r/F)^3} $$
+$$\nabla^2 u(r) = - \frac{1}{r}\frac{1}{(1+r/F)^3} $$
 
 Suppose our wave function has the following form,
 

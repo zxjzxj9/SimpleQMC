@@ -170,13 +170,31 @@ TEST(JastrowWfn, Gradient) {
     auto func2 = [&](const Eigen::Matrix<double, 1, 3>& p) {
          return wfn->value(r1, p);
     };
-    Eigen::Matrix<double, 1, 3> p = Eigen::Matrix<double, 1, 3>::Random(); 
-    auto nderv_f1 = gradient(p, func1);
-    auto derv_f1 = wfn->grad(p, r2);
-    auto nderv_f2 = gradient(p, func2);
-    auto derv_f2 = wfn->grad(r1, p);
+    Eigen::Matrix<double, 1, 3> derv_f1, derv_f2;
+    auto nderv_f1 = gradient(r1, func1);
+    auto nderv_f2 = gradient(r2, func2);
+    std::tie(derv_f1, derv_f2) = wfn->grad(r1, r2);
     ASSERT_NEAR((nderv_f1 - derv_f1).norm(), 0.0, 1e-6);
     ASSERT_NEAR((nderv_f2 - derv_f2).norm(), 0.0, 1e-6);
+    delete wfn;
+}
+
+TEST(JastrowWfn, Laplacian) {
+    Eigen::Matrix<double, 1, 3> r1 = Eigen::Matrix<double, 1, 3>::Random(); 
+    Eigen::Matrix<double, 1, 3> r2 = Eigen::Matrix<double, 1, 3>::Random(); 
+    auto wfn = new JastrowWfn<double>(2.0);
+    auto func1 = [&](const Eigen::Matrix<double, 1, 3>& p) {
+         return wfn->value(p, r2);
+    };
+    auto func2 = [&](const Eigen::Matrix<double, 1, 3>& p) {
+         return wfn->value(r1, p);
+    };
+    auto nderv2_f1 = laplace(r1, func1);
+    auto nderv2_f2 = laplace(r2, func2);
+    double derv2_f1, derv2_f2;
+    std::tie(derv2_f1, derv2_f2) = wfn->laplace(r1, r2);
+    ASSERT_NEAR(nderv2_f1, derv2_f1, 1e-2);
+    ASSERT_NEAR(nderv2_f2, derv2_f2, 1e-2);
     delete wfn;
 }
 
