@@ -242,6 +242,13 @@ public:
     };
 
     std::pair<T, T> sample(int maxstep=10000) {
+        
+        Eigen::Matrix<double, 1, 3> r1 = Eigen::Matrix<double, 1, 3>::Random(); 
+        Eigen::Matrix<double, 1, 3> r2 = Eigen::Matrix<double, 1, 3>::Random(); 
+
+        for(int i=0; i<maxstep; i++) {
+            
+        }
         return {0, 0};
     }
 
