@@ -2,6 +2,6 @@
 #include "hydrogen.hpp"
 
 int main() {
-    H2MolQMC<double> h2qmc;
+    // H2MolQMC<double> h2qmc;
     return 0;
 }
