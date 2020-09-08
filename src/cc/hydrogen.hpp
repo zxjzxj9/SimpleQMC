@@ -245,10 +245,17 @@ public:
     std::pair<T, T> sample(int maxstep=10000) {
         
         PCoord<T> r1 = PCoord<T>::Random(); 
-        PCoord<T> r2 = PCoord<T>::Random(); 
+        PCoord<T> r2 = PCoord<T>::Random();
+        T energy_old = 0.0;
+        T density_old = 0.0;
+        T energy_new = 0.0;
+        T density_new = 0.0;
+
+        //energy_old = mol->energy();
+        
 
         for(int i=0; i<maxstep; i++) {
-
+            
         }
         return {0, 0};
     }
