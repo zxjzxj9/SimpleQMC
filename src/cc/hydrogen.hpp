@@ -1,6 +1,7 @@
 #pragma once
 #include <fmt/core.h>
 #include <Eigen/Dense>
+#include <random>
 
 template<typename T>
 using PCoord = Eigen::Matrix<T, 1, 3>;
@@ -234,8 +235,9 @@ private:
 template<typename T> //, typename wfn>
 class H2MolQMC {
 public:
-    H2MolQMC(T factor, T c, T alpha, const PCoord<T>& R1, const PCoord<T>& R2) {
+    H2MolQMC(T factor, T c, T alpha, const PCoord<T>& R1, const PCoord<T>& R2, T dr): dr(dr){
         mol = new H2Mol<T, JastrowType::SIMPLE_JASTROW, AtomicWfnType::VB>(factor, c, alpha, R1, R2);
+        
     }
 
     ~H2MolQMC() {
@@ -246,22 +248,37 @@ public:
         
         PCoord<T> r1 = PCoord<T>::Random(); 
         PCoord<T> r2 = PCoord<T>::Random();
-        T energy_old = 0.0;
-        T density_old = 0.0;
+        T energy_old = mol->energy(r1, r2);
+        T density_old = mol->density(r1, r2);
         T energy_new = 0.0;
         T density_new = 0.0;
 
         //energy_old = mol->energy();
-        
-
+        T energy_tot = 0.0;
+        T energy_sq_tot = 0.0;
         for(int i=0; i<maxstep; i++) {
-            
+            r1 += 2*dr*(PCoord<T>::Random()-1.0);
+            r2 += 2*dr*(PCoord<T>::Random()-1.0);
+            energy_new = mol->energy(r1, r2);
+            density_new = mol->density(r1, r2);
+
+            if(density_new/density_old > 
+                std::uniform_real_distribution<T>(rgen)) {
+                energy_old = energy_new;
+                density_old = density_new;
+            }
+            energy_tot += energy_old;
+            energy_sq_tot += energy_old*energy_old;
         }
-        return {0, 0};
+        auto energy_avg = energy_tot/maxstep;
+        auto energy_std = std::sqrt(energy_sq_tot/maxstep - energy_avg*energy_avg);
+        return {energy_avg, energy_std};
     }
 
 private:
     H2Mol<T, JastrowType::SIMPLE_JASTROW, AtomicWfnType::VB>* mol;
     PCoord<T> R1, R2;
+    T dr;
+    std::mt19937 rgen(std::random_device());
     // T c, alpha;
 };
