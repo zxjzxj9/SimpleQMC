@@ -164,7 +164,7 @@ public:
     const JastrowType jastrow_type = Jastrow;
     const AtomicWfnType atomicwfn_type = AtomicWfn;
 
-    H2Mol(T factor, T c, T alpha, PCoord<T>& R1, PCoord<T>& R2):
+    H2Mol(T factor, T c, T alpha, const PCoord<T>& R1, const PCoord<T>& R2):
         R1(R1), R2(R2) {
         switch (Jastrow) {
             case JastrowType::SIMPLE_JASTROW:
@@ -226,7 +226,7 @@ public:
     }
 
 private:
-    WaveFn<T>* jastrow = nullptr;
+    JastrowWfn<T>* jastrow = nullptr;
     WaveFn<T>* atomicwfn = nullptr;
     PCoord<T> R1, R2;
 };
