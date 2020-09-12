@@ -16,6 +16,8 @@ int main() {
         ("alpha", "Trial wave function parameter alpha", cxxopts::value<double>()->default_value("1.0"))
         ("s,step", "Monte Carlo step size", cxxopts::value<double>()->default_value("1.0"))
         ("n,nstep", "Monte Carlo step size", cxxopts::value<int>()->default_value("1000000"))
+        ("r1", "First atom coordinateds", cxxopts::value<std::vector<double>>()->default_value("0.5 0.0 0.0"))
+        ("r2", "Second atom coordinateds", cxxopts::value<std::vector<double>>()->default_value("-0.5 0.0 0.0"))
         ("h,help", "Print usage")
     ;
     return 0;
