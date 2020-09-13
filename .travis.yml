@@ -27,6 +27,6 @@ matrix:
 script:
 - eval $MATRIX_EVAL
 - mkdir build && cd build 
-- cmake -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+- cmake -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake ..
 - make
 - ./bin/test_hydrogen.x
