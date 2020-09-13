@@ -1,4 +1,4 @@
-# Simple Quantum Monte Carlo Program collections
+# Simple Quantum Monte Carlo Programs
 ![build status](https://travis-ci.com/zxjzxj9/SimpleQMC.svg?branch=master)
 
 ## How to build:
