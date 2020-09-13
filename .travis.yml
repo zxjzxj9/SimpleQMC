@@ -1,5 +1,6 @@
 language: cpp
 sudo: required
+dist: focal
 
 matrix:
   include:
@@ -12,6 +13,7 @@ matrix:
           packages: 
             - g++-8
             - gcc-8
+            - cmake
       env:
         - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
         - LABEL="linux"
