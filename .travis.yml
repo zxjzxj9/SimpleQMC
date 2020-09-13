@@ -1,0 +1,31 @@
+language: cpp
+sudo: required
+
+matrix:
+  include:
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages: 
+            - libboost1.55-all-dev
+            - g++-8
+            - gcc-8
+      env:
+        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+        - LABEL="linux"
+        - _DEPLOYABLE="true"
+        - STRIP="strip"
+      install:
+        - git clone https://github.com/microsoft/vcpkg
+        - ./vcpkg/bootstrap-vcpkg.sh
+        - ./vcpkg/vcpkg install cxxopts eigen3 fmt gtest
+
+script:
+- eval $MATRIX_EVAL
+- mkdir build && cd build 
+- cmake -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+- make
+- ./bin/test_hydrogen.x
