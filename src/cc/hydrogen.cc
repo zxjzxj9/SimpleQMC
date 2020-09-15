@@ -2,7 +2,7 @@
 #include <cxxopts.hpp>
 #include "hydrogen.hpp"
 
-int main() {
+int main(int argc, char** argv) {
     // H2MolQMC<double> h2qmc;
     PCoord<double> r1; 
     PCoord<double> r2;
@@ -20,5 +20,28 @@ int main() {
         ("r2", "Second atom coordinateds", cxxopts::value<std::vector<double>>()->default_value("-0.5 0.0 0.0"))
         ("h,help", "Print usage")
     ;
+    auto result = options.parse(argc, argv);
+    if(result.count("help")) {
+        fmt::print("%s\n", options.help());
+        exit(0);
+    }
+    std::string banner =                                                
+        R"(                               ____                  )" "\n" 
+        R"(        ,----..              ,'  , `.   ,----..      )" "\n" 
+        R"(       /   /   \          ,-+-,.' _ |  /   /   \     )" "\n" 
+        R"(      /   .     :      ,-+-. ;   , || |   :     :    )" "\n" 
+        R"(     .   /   ;.  \    ,--.'|'   |  ;| .   |  ;. /    )" "\n" 
+        R"(    .   ;   /  ` ;   |   |  ,', |  ': .   ; /--`     )" "\n" 
+        R"(    ;   |  ; \ ; |   |   | /  | |  || ;   | ;        )" "\n" 
+        R"(    |   :  | ; | '   '   | :  | :  |, |   : |        )" "\n" 
+        R"(    .   |  ' ' ' :   ;   . |  ; |--'  .   | '___     )" "\n" 
+        R"(    '   ;  \; /  |   |   : |  | ,     '   ; : .'|    )" "\n" 
+        R"(     \   \  ',  . \  |   : '  |/      '   | '/  :    )" "\n" 
+        R"(      ;   :      ; | ;   | |`-'       |   :    /     )" "\n" 
+        R"(       \   \ .'`--"  |   ;/            \   \ .'      )" "\n" 
+        R"(        `---`        '---'              `---`        )" "\n" ;
+
+    fmt::print(banner);
+    fmt::print("Simple Quantum Monte Carlo Program\n");
     return 0;
 }

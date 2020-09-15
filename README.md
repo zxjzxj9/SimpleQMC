@@ -8,6 +8,7 @@ To create a series of Quantum Monte Carlo programs. The programs are for demonst
 ## How to build:
 1. Install vcpkg, see the vcpkg [official repo](https://github.com/microsoft/vcpkg).
 2. Using cmake and make to build the executables.
+
 ```bash
 make build
 cd build
