@@ -1,17 +1,16 @@
 #include <fmt/core.h>
 #include <cxxopts.hpp>
+#include <vector>
 #include "hydrogen.hpp"
 
 int main(int argc, char** argv) {
     // H2MolQMC<double> h2qmc;
-    PCoord<double> r1; 
-    PCoord<double> r2;
-    r1 << 0.40, 0.0, 0.0;
-    r2 << -0.40, 0.0, 0.0;
-    H2MolQMC<double> h2qmc(1.0, 0.5, 1.0, r1, r2, 0.1);
+    // r1 << 0.40, 0.0, 0.0;
+    // r2 << -0.40, 0.0, 0.0;
+    // H2MolQMC<double> h2qmc(1.0, 0.5, 1.0, r1, r2, 0.1);
     cxxopts::Options options("HydrogenQMC", "Quantum Monte Carlo Program for Hydrogen Molecule");
     options.add_options()
-        ("r,range", "Use range exploration", cxxopts::value<bool>()->default_value("false"))
+        ("F", "Jastrow factor parameter", cxxopts::value<double>()->default_value("1.0"))
         ("c", "Trial wave function parameter c", cxxopts::value<double>()->default_value("0.0"))
         ("alpha", "Trial wave function parameter alpha", cxxopts::value<double>()->default_value("1.0"))
         ("s,step", "Monte Carlo step size", cxxopts::value<double>()->default_value("1.0"))
@@ -42,6 +41,17 @@ int main(int argc, char** argv) {
         R"(        `---`        '---'              `---`        )" "\n" ;
 
     fmt::print(banner);
-    fmt::print("Simple Quantum Monte Carlo Program\n");
+    fmt::print("Simple Quantum Monte Carlo Program for H2\n");
+
+    PCoord<double> r1; 
+    PCoord<double> r2;
+    auto r1_opt = result["r1"].as<std::vector<double>>();
+    auto r2_opt = result["r2"].as<std::vector<double>>();
+    r1<<r1_opt[0],r1_opt[1],r1_opt[2];
+    r2<<r2_opt[0],r2_opt[1],r2_opt[2];
+    auto F = result["F"].as<double>();
+    auto c = result["c"].as<double>();
+    auto alpha = result["alpha"].as<double>();
+
     return 0;
 }
