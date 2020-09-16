@@ -10,7 +10,7 @@ To create a series of Quantum Monte Carlo programs. The programs are for demonst
 2. Using cmake and make to build the executables.
 
 ```bash
-make build
+mkdir build
 cd build
 cmake .. -DCMAKE_TOOLCHAIN_FILE=/path/to/your/vckpg/vcpkg.cmake
 ```
