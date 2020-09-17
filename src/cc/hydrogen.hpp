@@ -252,18 +252,19 @@ public:
         T density_old = mol->density(r1, r2);
         T energy_new = 0.0;
         T density_new = 0.0;
+        std::uniform_real_distribution<T> rnum(0, 1);
 
         //energy_old = mol->energy();
         T energy_tot = 0.0;
         T energy_sq_tot = 0.0;
         for(int i=0; i<maxstep; i++) {
-            r1 += 2*dr*(PCoord<T>::Random()-1.0);
-            r2 += 2*dr*(PCoord<T>::Random()-1.0);
+            r1 += 2*dr*(PCoord<T>::Random()-PCoord<T>::Ones());
+            r2 += 2*dr*(PCoord<T>::Random()-PCoord<T>::Ones());
             energy_new = mol->energy(r1, r2);
             density_new = mol->density(r1, r2);
 
             if(density_new/density_old > 
-                std::uniform_real_distribution<T>(rgen)) {
+                rnum(rgen)) {
                 energy_old = energy_new;
                 density_old = density_new;
             }
@@ -271,7 +272,7 @@ public:
             energy_sq_tot += energy_old*energy_old;
         }
         auto energy_avg = energy_tot/maxstep;
-        auto energy_std = std::sqrt(energy_sq_tot/maxstep - energy_avg*energy_avg);
+        auto energy_std = std::sqrt(std::abs(energy_sq_tot/maxstep - energy_avg*energy_avg));
         return {energy_avg, energy_std};
     }
 
@@ -279,6 +280,7 @@ private:
     H2Mol<T, JastrowType::SIMPLE_JASTROW, AtomicWfnType::VB>* mol;
     PCoord<T> R1, R2;
     T dr;
-    std::mt19937 rgen(std::random_device());
+    std::random_device rd;
+    std::mt19937 rgen{rd()};
     // T c, alpha;
 };

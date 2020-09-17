@@ -52,6 +52,12 @@ int main(int argc, char** argv) {
     auto F = result["F"].as<double>();
     auto c = result["c"].as<double>();
     auto alpha = result["alpha"].as<double>();
-
+    auto s = result["step"].as<double>();
+    auto nstep = result["nstep"].as<int>();
+    H2MolQMC<double> h2qmc(F, c, alpha, r1, r2, s);
+    double energy, energy_std;
+    std::tie(energy, energy_std) = h2qmc.sample(nstep);
+    fmt::print("{:>12s}\t{:>12s}\n", "Energy", "Energy Std");
+    fmt::print("{:>12.8f}\t{:>12.8f}\n", energy, energy_std);
     return 0;
 }
