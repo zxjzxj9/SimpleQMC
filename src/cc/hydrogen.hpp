@@ -133,28 +133,35 @@ public:
 
     ~JastrowWfn() {}
 
-    T value(const PCoord<T>& r1, const PCoord<T>& r2) {
-        auto r12 = (r1 - r2).norm();
-        return factor/(2 + 2*r12/factor);
+    inline T value(const PCoord<T>& r1, const PCoord<T>& r2) {
+        return std::exp(-ufunc(r1, r2));
     }
 
     // The gradient is symmetric w.r.t r1 and r2
     std::pair<PCoord<T>, PCoord<T>> 
     grad(const PCoord<T>& r1, const PCoord<T>& r2) {
+        auto val = value(r1, r2);
         auto r12 = r1 - r2;
         auto r = r12.norm();
-        auto v1 = -r12/(2*r*std::pow(1+r/factor, 2));
-        return {v1, -v1};
+        auto dv = -r12/(2*r*std::pow(1+r/factor, 2));
+        return {-dv*val, dv*val};
     }
 
     std::pair<T, T> 
     laplace(const PCoord<T>& r1, const PCoord<T>& r2) {
+        auto val = value(r1, r2);
         auto r = (r1 - r2).norm();
-        auto val = -1/(r*std::pow(1+r/factor, 3)); 
-        return {val, val};
+        auto dv = -1/(2*std::pow(1+r/factor, 2));
+        auto d2v = -1/(r*std::pow(1+r/factor, 3));
+        auto ret = (dv*dv - d2v)*val;
+        return {ret, ret};
     }
 private:
     T factor;
+    inline T ufunc(const PCoord<T>& r1, const PCoord<T> r2) {
+        auto r = (r1 - r2).norm();
+        return factor/(2 + 2*r/factor);
+    }
 };
 
 template<typename T, JastrowType Jastrow, AtomicWfnType AtomicWfn>
