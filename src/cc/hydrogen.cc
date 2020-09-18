@@ -3,6 +3,8 @@
 #include <vector>
 #include "hydrogen.hpp"
 
+const double Hartree = 27.21138602;
+
 int main(int argc, char** argv) {
     // H2MolQMC<double> h2qmc;
     // r1 << 0.40, 0.0, 0.0;
@@ -57,7 +59,7 @@ int main(int argc, char** argv) {
     H2MolQMC<double> h2qmc(F, c, alpha, r1, r2, s);
     double energy, energy_std;
     std::tie(energy, energy_std) = h2qmc.sample(nstep);
-    fmt::print("{:>12s}\t{:>12s}\n", "Energy", "Energy Std");
-    fmt::print("{:>12.8f}\t{:>12.8f}\n", energy, energy_std);
+    fmt::print("{:>20s}\t{:>20s}\n", "Energy (eV rel. 2H)", "Energy Std");
+    fmt::print("{:>20.8f}\t{:>20.8f}\n", (energy+1)*Hartree, energy_std*Hartree);
     return 0;
 }

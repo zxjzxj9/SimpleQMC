@@ -258,21 +258,23 @@ public:
         T energy_tot = 0.0;
         T energy_sq_tot = 0.0;
         for(int i=0; i<maxstep; i++) {
-            r1 += 2*dr*(PCoord<T>::Random()-PCoord<T>::Ones());
-            r2 += 2*dr*(PCoord<T>::Random()-PCoord<T>::Ones());
-            energy_new = mol->energy(r1, r2);
-            density_new = mol->density(r1, r2);
+            auto dr1 = 2*dr*(PCoord<T>::Random()-PCoord<T>::Ones());
+            auto dr2  = 2*dr*(PCoord<T>::Random()-PCoord<T>::Ones());
+            energy_new = mol->energy(r1+dr1, r2+dr2);
+            density_new = mol->density(r1+dr1, r2+dr2);
 
             if(density_new/density_old > 
                 rnum(rgen)) {
                 energy_old = energy_new;
                 density_old = density_new;
+                r1 += dr1;
+                r2 += dr2;
             }
             energy_tot += energy_old;
             energy_sq_tot += energy_old*energy_old;
         }
         auto energy_avg = energy_tot/maxstep;
-        auto energy_std = std::sqrt(std::abs(energy_sq_tot/maxstep - energy_avg*energy_avg));
+        auto energy_std = std::sqrt(energy_sq_tot/maxstep - energy_avg*energy_avg);
         return {energy_avg, energy_std};
     }
 
