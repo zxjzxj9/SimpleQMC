@@ -216,10 +216,13 @@ public:
         ret += 2*dJdr1.dot(atomicwfn->grad(r1))/(jval*val1);
         ret += 2*dJdr2.dot(atomicwfn->grad(r2))/(jval*val2);
 
+        ret = -0.5*ret; // kintetic energy
+
         ret += -1.0/(r1-R1).norm();
         ret += -1.0/(r1-R2).norm();
         ret += -1.0/(r2-R1).norm();
         ret += -1.0/(r2-R2).norm();
+        ret += 1.0/(r1-r2).norm();
         ret += 1.0/(R1-R2).norm();
 
         return ret;
@@ -237,7 +240,6 @@ class H2MolQMC {
 public:
     H2MolQMC(T factor, T c, T alpha, const PCoord<T>& R1, const PCoord<T>& R2, T dr): dr(dr){
         mol = new H2Mol<T, JastrowType::SIMPLE_JASTROW, AtomicWfnType::VB>(factor, c, alpha, R1, R2);
-        
     }
 
     ~H2MolQMC() {
@@ -246,8 +248,8 @@ public:
 
     std::pair<T, T> sample(int maxstep=10000) {
         
-        PCoord<T> r1 = PCoord<T>::Random(); 
-        PCoord<T> r2 = PCoord<T>::Random();
+        PCoord<T> r1 = PCoord<T>::Random() - PCoord<T>::Ones(); 
+        PCoord<T> r2 = PCoord<T>::Random() - PCoord<T>::Ones();
         T energy_old = mol->energy(r1, r2);
         T density_old = mol->density(r1, r2);
         T energy_new = 0.0;
