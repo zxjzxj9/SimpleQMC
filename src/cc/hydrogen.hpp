@@ -255,8 +255,9 @@ public:
 
     std::pair<T, T> sample(int maxstep=10000) {
         
-        PCoord<T> r1 = PCoord<T>::Random() - PCoord<T>::Ones(); 
-        PCoord<T> r2 = PCoord<T>::Random() - PCoord<T>::Ones();
+        // Thsi method return the number between [-1, 1]
+        PCoord<T> r1 = PCoord<T>::Random(); 
+        PCoord<T> r2 = PCoord<T>::Random();
         T energy_old = mol->energy(r1, r2);
         T density_old = mol->density(r1, r2);
         T energy_new = 0.0;
@@ -266,9 +267,11 @@ public:
         //energy_old = mol->energy();
         T energy_tot = 0.0;
         T energy_sq_tot = 0.0;
+        int accept;
         for(int i=0; i<maxstep; i++) {
-            auto dr1 = 2*dr*(PCoord<T>::Random()-PCoord<T>::Ones());
-            auto dr2  = 2*dr*(PCoord<T>::Random()-PCoord<T>::Ones());
+            auto dr1 = dr*PCoord<T>::Random();
+            auto dr2 = dr*PCoord<T>::Random();
+            
             energy_new = mol->energy(r1+dr1, r2+dr2);
             density_new = mol->density(r1+dr1, r2+dr2);
 
@@ -278,12 +281,14 @@ public:
                 density_old = density_new;
                 r1 += dr1;
                 r2 += dr2;
+                accept += 1;
             }
             energy_tot += energy_old;
             energy_sq_tot += energy_old*energy_old;
         }
         auto energy_avg = energy_tot/maxstep;
         auto energy_std = std::sqrt(energy_sq_tot/maxstep - energy_avg*energy_avg);
+        // fmt::print("Accept ration: {}", (double) accept/maxstep);
         return {energy_avg, energy_std};
     }
 

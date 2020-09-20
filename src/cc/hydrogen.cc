@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
     H2MolQMC<double> h2qmc(F, c, alpha, r1, r2, s);
     double energy, energy_std;
     std::tie(energy, energy_std) = h2qmc.sample(nstep);
-    fmt::print("{:>20s}\t{:>20s}\n", "Energy (eV rel. 2H)", "Energy Std");
-    fmt::print("{:>20.8f}\t{:>20.8f}\n", (energy+1)*Hartree, energy_std*Hartree);
+    fmt::print("{:>20s}\t{:>20s}\n", "Energy (eV rel. 2H)", "Energy Std (eV per elec.)");
+    fmt::print("{:>20.8f}\t{:>20.8f}\n", (energy+1)*Hartree, energy_std*Hartree/2.0);
     return 0;
 }
