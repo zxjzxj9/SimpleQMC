@@ -258,33 +258,32 @@ public:
         // Thsi method return the number between [-1, 1]
         PCoord<T> r1 = PCoord<T>::Random(); 
         PCoord<T> r2 = PCoord<T>::Random();
-        T energy_old = mol->energy(r1, r2);
-        T density_old = mol->density(r1, r2);
-        T energy_new = 0.0;
-        T density_new = 0.0;
+
+        PCoord<T> r1_new, r2_new;
+        T energy = mol->energy(r1, r2);
+        T density = mol->density(r1, r2);
         std::uniform_real_distribution<T> rnum(0, 1);
 
         //energy_old = mol->energy();
         T energy_tot = 0.0;
         T energy_sq_tot = 0.0;
-        int accept;
+        int accept = 0;
         for(int i=0; i<maxstep; i++) {
-            auto dr1 = dr*PCoord<T>::Random();
-            auto dr2 = dr*PCoord<T>::Random();
-            
-            energy_new = mol->energy(r1+dr1, r2+dr2);
-            density_new = mol->density(r1+dr1, r2+dr2);
+            r1_new = r1 + dr*PCoord<T>::Random();
+            r2_new = r2 + dr*PCoord<T>::Random();
 
-            if(density_new/density_old > 
-                rnum(rgen)) {
-                energy_old = energy_new;
-                density_old = density_new;
-                r1 += dr1;
-                r2 += dr2;
+            auto dtmp = mol->density(r1_new, r2_new);
+            auto ratio = dtmp/density;
+            
+            if(ratio > 1 || ratio > rnum(rgen)) {
+                r1 = r1_new;
+                r2 = r2_new;
+                density = dtmp;
+                energy = mol->energy(r1, r2);
                 accept += 1;
             }
-            energy_tot += energy_old;
-            energy_sq_tot += energy_old*energy_old;
+            energy_tot += energy;
+            energy_sq_tot += energy*energy;
         }
         auto energy_avg = energy_tot/maxstep;
         auto energy_std = std::sqrt(energy_sq_tot/maxstep - energy_avg*energy_avg);
