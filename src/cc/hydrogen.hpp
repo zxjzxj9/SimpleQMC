@@ -246,7 +246,7 @@ template<typename T> //, typename wfn>
 class H2MolQMC {
 public:
     H2MolQMC(T factor, T c, T alpha, const PCoord<T>& R1, const PCoord<T>& R2, T dr): dr(dr){
-        mol = new H2Mol<T, JastrowType::SIMPLE_JASTROW, AtomicWfnType::VB>(factor, c, alpha, R1, R2);
+        mol = new H2Mol<T, JastrowType::SIMPLE_JASTROW, AtomicWfnType::MO>(factor, c, alpha, R1, R2);
     }
 
     ~H2MolQMC() {
@@ -269,6 +269,10 @@ public:
         T energy_sq_tot = 0.0;
         int accept = 0;
         for(int i=0; i<maxstep; i++) {
+
+            dr = std::max(dr, 0.1);
+            dr = std::min(dr, 10.0);
+
             r1_new = r1 + dr*PCoord<T>::Random();
             r2_new = r2 + dr*PCoord<T>::Random();
 
@@ -282,20 +286,25 @@ public:
                 energy = mol->energy(r1, r2);
                 accept += 1;
             }
+
+            if(static_cast<T>(accept)/(i+1) > 0.5) dr*=scale;
+            else dr/=scale;
+
             energy_tot += energy;
             energy_sq_tot += energy*energy;
         }
         auto energy_avg = energy_tot/maxstep;
         auto energy_std = std::sqrt(energy_sq_tot/maxstep - energy_avg*energy_avg);
-        // fmt::print("Accept ration: {}", (double) accept/maxstep);
+        fmt::print("Accept ratio: {}\n", (double) accept/maxstep);
         return {energy_avg, energy_std};
     }
 
 private:
-    H2Mol<T, JastrowType::SIMPLE_JASTROW, AtomicWfnType::VB>* mol;
+    H2Mol<T, JastrowType::SIMPLE_JASTROW, AtomicWfnType::MO>* mol;
     PCoord<T> R1, R2;
     T dr;
     std::random_device rd;
     std::mt19937 rgen{rd()};
+    const T scale = 1.01;
     // T c, alpha;
 };

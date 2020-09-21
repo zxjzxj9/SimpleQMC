@@ -90,3 +90,21 @@ In MO case,
 $$ \frac{\nabla_i \psi(\mathbf{r_i})}{\psi(\mathbf{r_i})} = \frac{\nabla_i \phi(\mathbf{r_i-R_1}) + \nabla_i \phi(\mathbf{r_i-R_2}) }{\phi(\mathbf{r_i-R_1}) + \phi(\mathbf{r_i-R_2})} $$
 
 $$ \frac{\nabla_i^2 \psi(\mathbf{r_i})}{\psi(\mathbf{r_i})} = \frac{\nabla_i^2 \phi(\mathbf{r_i-R_1}) + \nabla_i^2 \phi(\mathbf{r_i-R_2}) }{\phi(\mathbf{r_i-R_1}) + \phi(\mathbf{r_i-R_2})} $$
+
+With these formula, we have got the following energy table (we can use MO and VB freely as we wish, here we use MO as the atomic wave function)
+
+| Bond Length Å | Binding Energy (eV)     |
+| :---:         |          :---:          |
+| 0.66          |   -4.10                 |
+| 0.68          |   -4.19                 |
+| 0.70          |   -4.24                 |
+| 0.72          |   -4.27                 |
+| 0.74          |   -4.28                 |
+| 0.76          |   -4.26                 |
+| 0.78          |   -4.24                 |
+| 0.80          |   -4.20                 |
+
+We can fit the data with Morse potential.
+
+$$ V(r) = D_e(1-e^{-a(r-r_e)})^2 $$
+
