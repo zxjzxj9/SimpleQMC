@@ -108,3 +108,11 @@ We can fit the data with Morse potential.
 
 $$ V(r) = D_e(1-e^{-a(r-r_e)})^2 $$
 
+In the hydrogen case, We have the parameter 
+
+$$ D_e = 4.28 eV, a = 2.30 Å^{-1}, r_e = 0.74 Å$$
+
+And the potential energy surface can be shown as follows.
+
+![H2 Morse Potential](../imgs/h2_pes.png)
+
