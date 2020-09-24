@@ -116,3 +116,8 @@ And the potential energy surface can be shown as follows.
 
 ![H2 Morse Potential](../imgs/h2_pes.png)
 
+## 3. Ground state for Lithium Atom
+
+### 3.1 Add Slter determinants for Lithium Atom
+
+In the case of Lithium Atoms, thing gos different, since the lithiun atom has three electrions and thus open-shell, Slater determinant should be introduced in order to describe this system.
