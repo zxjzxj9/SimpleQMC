@@ -121,3 +121,7 @@ And the potential energy surface can be shown as follows.
 ### 3.1 Add Slter determinants for Lithium Atom
 
 In the case of Lithium Atoms, thing gos different, since the lithiun atom has three electrions and thus open-shell, Slater determinant should be introduced in order to describe this system.
+
+The total wavefunction could be separates as the product of an arbitrary NxN determinate and a suitable fully symmetric function J, as follows,
+
+$$ \psi(1\sigma_1, 2\sigma_2,....,N\sigma_N) = \left| \phi_i(k) \langle \sigma_k| s_i\rangle \right| J(1\sigma_1, 2\sigma_2,....,N\sigma_N) $$ 
