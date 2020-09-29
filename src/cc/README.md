@@ -125,3 +125,5 @@ In the case of Lithium Atoms, thing gos different, since the lithiun atom has th
 The total wavefunction could be separates as the product of an arbitrary NxN determinate and a suitable fully symmetric function J, as follows,
 
 $$ \psi(1\sigma_1, 2\sigma_2,....,N\sigma_N) = \left| \phi_i(k) \langle \sigma_k| s_i\rangle \right| J(1\sigma_1, 2\sigma_2,....,N\sigma_N) $$ 
+
+One may ntoice that here we decompose the wave function into two parts, i.e. one body with the spin, and a Jastrow function depending on the spin. 
