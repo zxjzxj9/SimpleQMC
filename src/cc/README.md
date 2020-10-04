@@ -127,3 +127,8 @@ The total wavefunction could be separates as the product of an arbitrary NxN det
 $$ \psi(1\sigma_1, 2\sigma_2,....,N\sigma_N) = \left| \phi_i(k) \langle \sigma_k| s_i\rangle \right| J(1\sigma_1, 2\sigma_2,....,N\sigma_N) $$ 
 
 One may ntoice that here we decompose the wave function into two parts, i.e. determinant of single-particle states containing the spin (anti-symmetric), and a Jastrow function depending on the spin (symmetric). In this way, the whole wave function can be anti-symmetric and thus describe a fermion system. Since different spin particles are orthogonal, the determinant can be further decomposed into two orthogonal parts, each with one specified spin. In this way, the spin are excluded from the determinants.
+
+The oribtal of Li atom are s states amd depend only on the distance r from the nucleus. We can represent the Slater function as follows.
+
+$$ \psi_n(r) = A\sum^m_{\nu=1}\phi_{\nu n}r^{p_\nu}exp(-\tilde\zeta_n r)$$
+
