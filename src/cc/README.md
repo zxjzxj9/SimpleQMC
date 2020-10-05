@@ -132,3 +132,4 @@ The oribtal of Li atom are s states amd depend only on the distance r from the n
 
 $$ \psi_n(r) = A\sum^m_{\nu=1}\phi_{\nu n}r^{p_\nu}exp(-\tilde\zeta_n r)$$
 
+In this formula, we have 6 states, i.e. 1s 2s and 2p (m=0), each with two spin states, for 2s and 2p, notice we have a nodal wavefunction, so $$ p_{\nu n} $$ would be non-zero.
