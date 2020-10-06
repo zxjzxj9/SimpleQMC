@@ -132,4 +132,13 @@ The oribtal of Li atom are s states amd depend only on the distance r from the n
 
 $$ \psi_n(r) = A\sum^m_{\nu=1}\phi_{\nu n}r^{p_\nu}exp(-\tilde\zeta_n r)$$
 
-In this formula, we have 6 states, i.e. 1s 2s and 2p (m=0), each with two spin states, for 2s and 2p, notice we have a nodal wavefunction, so $$ p_{\nu n} $$ would be non-zero.
+In this formula, we have 3 electrons with 6 states, i.e. the three electrons occupy 1s 2s obitals, each with two spin states, for 2s and 2p, notice we have a nodal wavefunction, so $$ p_{\nu n} $$ would be non-zero.
+
+Since we are using slater determinant as thw wave function, the derivative of determinant w.r.t coordinates should be listed as follows. We denote the inverse matrix as A, then we have the following formula, if we only change $$ k_{th} $$ electron coordinate i.e. Gibbs sampling, we have the following result.
+
+$$ q = \frac{D^{new}}{D^{old}} = \sum_{j=1}^N A_{kj}\phi_j(r^{new}_k)$$
+
+$$ \frac{\nabla_k D}{D} = \sum_{j=1}^N A_{kj}\nabla_k\phi_j(r^{new}_k) $$
+
+$$ \frac{\Delta_k D}{D} = \sum_{j=1}^N A_{kj}\Delta_k\phi_j(r^{new}_k) $$
+
