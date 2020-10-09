@@ -128,6 +128,8 @@ $$ \psi(1\sigma_1, 2\sigma_2,....,N\sigma_N) = \left| \phi_i(k) \langle \sigma_k
 
 One may ntoice that here we decompose the wave function into two parts, i.e. determinant of single-particle states containing the spin (anti-symmetric), and a Jastrow function depending on the spin (symmetric). In this way, the whole wave function can be anti-symmetric and thus describe a fermion system. Since different spin particles are orthogonal, the determinant can be further decomposed into two orthogonal parts, each with one specified spin. In this way, the spin are excluded from the determinants.
 
+Futhermore, the result in this [link](https://compphysics.github.io/ComputationalPhysics2/doc/pub/vmc/html/vmc-bs.html) tells us that in QMC simulation, the wave function can be further decomposed as the product as the spin-up determinants and spin-down determinants (even though it will break symmetry of the wavefunction), which save us the calculation time. To caculate the total energy of lithiun atom, we break the wave function into two parts, i.e. 1s (up), 2s (up) and 1s (down).
+
 The oribtal of Li atom are s states amd depend only on the distance r from the nucleus. We can represent the Slater function as follows.
 
 $$ \psi_n(r) = A\sum^m_{\nu=1}\phi_{\nu n}r^{p_\nu}exp(-\tilde\zeta_n r)$$
