@@ -130,7 +130,7 @@ One may ntoice that here we decompose the wave function into two parts, i.e. det
 
 Futhermore, the result in this [link](https://compphysics.github.io/ComputationalPhysics2/doc/pub/vmc/html/vmc-bs.html) tells us that in QMC simulation, the wave function can be further decomposed as the product as the spin-up determinants and spin-down determinants (even though it will break symmetry of the wavefunction), which save us the calculation time. To caculate the total energy of lithiun atom, we break the wave function into two parts, i.e. 1s (up), 2s (up) and 1s (down).
 
-The oribtal of Li atom are s states amd depend only on the distance r from the nucleus. We can represent the Slater function as follows.
+The oribtal of Li atom are s states amd depend only on the distance r from the nucleus. We can represent the Slater function as follows. The detailed trial wave function can be found in this [link](https://arxiv.org/pdf/physics/0312104.pdf).
 
 $$ \psi_n(r) = A\sum^m_{\nu=1}\phi_{\nu n}r^{p_\nu}exp(-\tilde\zeta_n r)$$
 
