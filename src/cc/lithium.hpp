@@ -28,6 +28,7 @@ public:
 };
 
 // n define the quantum number n of wave function
+// for lithium atom only (n=1, 2)
 template<typename T, int N>
 class SlaterWaveFn {
 public:
@@ -59,7 +60,7 @@ public:
         auto scalar_derv = 0;
         for(int i=0; i<nterm; i++) {
             scalar_derv += norm_const[i]*phi_val[n-1][i]*(
-                                (pnu_val[i] - 1)*pow(dist, pnu_val[i] - 2) -zeta_val[i]*pow(dist, pnu_val[i] - 1))*
+                                (pnu_val[i] - 1)*pow(dist, pnu_val[i] - 2) - zeta_val[i]*pow(dist, pnu_val[i] - 1))*
                                 std::exp(-dist*zeta_val[i]);
         }
         return scalar_derv*nvec;
@@ -70,13 +71,18 @@ public:
         auto scalar_derv = 0;
         auto scalar_dderv = 0;
         for(int i=0; i<nterm; i++) {
+            // (ab)'' = a''b + 2a'b'+ ab''
             scalar_derv += norm_const[i]*phi_val[n-1][i]*(
-                                (pnu_val[i] - 1)*pow(dist, pnu_val[i] - 2) -zeta_val[i]*pow(dist, pnu_val[i] - 1))*
+                                (pnu_val[i] - 1)*pow(dist, pnu_val[i] - 2) - zeta_val[i]*pow(dist, pnu_val[i] - 1))*
                                 std::exp(-dist*zeta_val[i]);
-            // TODOs: formula for the second derivative
-            scalar_dderv = 0.0;
+            scalar_dderv += norm_const[i]*phi_val[n-1][i]*(
+                                (pnu_val[i] - 1)*(pnu_val[i] - 2)*pow(dist, pnu_val[i] - 3) -
+                                2*zeta_val[i]*(pnu_val[i] - 1)*pow(dist, pnu_val[i] - 2) +
+                                zeta_val[i]*zeta_val[i]*pow(dist, pnu_val[i] - 1))* 
+                                std::exp(-dist*zeta_val[i]);
         }
-
+        scalar_dderv = scalar_dderv + 2*scalar_derv/dist; // why?
+        return  
     }
     
 private:
