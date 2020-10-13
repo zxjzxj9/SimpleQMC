@@ -82,7 +82,7 @@ public:
                                 std::exp(-dist*zeta_val[i]);
         }
         scalar_dderv = scalar_dderv + 2*scalar_derv/dist; // why?
-        return  
+        return  scalar_derv;
     }
     
 private:
