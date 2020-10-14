@@ -101,3 +101,14 @@ private:
     };
     T slap[2] = {1.00, 0.95};
 };
+
+template<typename T>
+class SlaterDet {
+public:
+    SlaterDet() {}
+
+private:
+    PCoord<T> r1, r2, r3;
+    SlaterWaveFn<T, 1> s1, s2; // 1s alpha, 1s beta
+    SlaterWaveFn<T, 2> s3; // 2s alpha
+};
