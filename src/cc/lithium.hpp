@@ -30,7 +30,7 @@ public:
 // n define the quantum number n of wave function
 // for lithium atom only (n=1, 2)
 template<typename T, int N>
-class SlaterWaveFn {
+class SlaterWaveFn: public WaveFn<T> {
 public:
     const int n = N;
     const int nterm = 7;
@@ -102,10 +102,43 @@ private:
     T slap[2] = {1.00, 0.95};
 };
 
+// For Jastrow term of wave function
 template<typename T>
-class SlaterDet {
+class Jastrow: {
+
+};
+
+// For lithium atom + Jastrow wave function
+// Not a child class of wave function
+template<typename T>
+class SlaterDet: {
 public:
-    SlaterDet() {}
+    // Radom initialization
+    SlaterDet() {
+        r1 = PCoord<T>::Radom();
+        r2 = PCoord<T>::Radom();
+        r3 = PCoord<T>::Radom();
+    }
+
+    // Given initial coordinate
+    SlaterDet(const PCoord<T> r1, const PCoord<T> r2, const PCoord<T> r3)
+        :r1(r1), r2(r2), r3(r3) {}
+
+    T eval() {
+
+    }
+
+    T update(PCoord<T> r, int i) {
+
+    }
+
+    T value() {
+
+    }
+
+    PCoord<T> value(int i) {
+
+    }
 
 private:
     PCoord<T> r1, r2, r3;
