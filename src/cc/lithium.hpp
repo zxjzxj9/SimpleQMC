@@ -113,16 +113,16 @@ class Jastrow: {
 template<typename T>
 class SlaterDet: {
 public:
-    // Radom initialization
-    SlaterDet() {
+    // Radom initialization, r0 is the position of nucleus
+    SlaterDet(const PCoord<T> r0): r0(r0) {
         r1 = PCoord<T>::Radom();
         r2 = PCoord<T>::Radom();
         r3 = PCoord<T>::Radom();
     }
 
     // Given initial coordinate
-    SlaterDet(const PCoord<T> r1, const PCoord<T> r2, const PCoord<T> r3)
-        :r1(r1), r2(r2), r3(r3) {}
+    SlaterDet(const PCoord<T> r0, const PCoord<T> r1, const PCoord<T> r2, const PCoord<T> r3)
+        :r0(r0), r1(r1), r2(r2), r3(r3) {}
 
     T eval() {
 
@@ -141,7 +141,9 @@ public:
     }
 
 private:
+    PCoord<T> r0;
     PCoord<T> r1, r2, r3;
     SlaterWaveFn<T, 1> s1, s2; // 1s alpha, 1s beta
     SlaterWaveFn<T, 2> s3; // 2s alpha
+    SlaterDet<T, 3, 3> sdet; // Slater determinant
 };
