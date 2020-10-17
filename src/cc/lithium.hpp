@@ -124,8 +124,16 @@ public:
     SlaterDet(const PCoord<T> r0, const PCoord<T> r1, const PCoord<T> r2, const PCoord<T> r3)
         :r0(r0), r1(r1), r2(r2), r3(r3) {}
 
-    T eval() {
+    ~SlaterDate() {
+        delete s1, s2, s3;
+    }
 
+    T eval() {
+        // For initialize evaluation and validation
+        sdet << s1->value(r1), s2 -> value(r2), 0.0,
+                s1->value(r2), s2 -> value(r1), 0.0,
+                0.0, 0.0, s3 -> value(r3); 
+        return sdet.determinant();
     }
 
     T update(PCoord<T> r, int i) {
@@ -143,7 +151,8 @@ public:
 private:
     PCoord<T> r0;
     PCoord<T> r1, r2, r3;
-    SlaterWaveFn<T, 1> s1, s2; // 1s alpha, 1s beta
-    SlaterWaveFn<T, 2> s3; // 2s alpha
+    SlaterWaveFn<T, 1>* s1;
+    SlaterWaveFn<T, 1>* s2; // 1s alpha, 1s beta
+    SlaterWaveFn<T, 2>* s3; // 2s alpha
     SlaterDet<T, 3, 3> sdet; // Slater determinant
 };
