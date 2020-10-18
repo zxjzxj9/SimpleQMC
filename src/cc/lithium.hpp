@@ -133,6 +133,7 @@ public:
         sdet << s1->value(r1), s2 -> value(r2), 0.0,
                 s1->value(r2), s2 -> value(r1), 0.0,
                 0.0, 0.0, s3 -> value(r3); 
+        inv_sdet = sdet.inverse();
         return sdet.determinant();
     }
 
@@ -154,5 +155,5 @@ private:
     SlaterWaveFn<T, 1>* s1;
     SlaterWaveFn<T, 1>* s2; // 1s alpha, 1s beta
     SlaterWaveFn<T, 2>* s3; // 2s alpha
-    SlaterDet<T, 3, 3> sdet; // Slater determinant
+    SlaterDet<T, 3, 3> sdet, inv_sdet; // Slater determinant
 };
