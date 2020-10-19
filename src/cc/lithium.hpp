@@ -138,7 +138,7 @@ public:
     }
 
     T update(PCoord<T> r, int i) {
-
+        // update the slater det matrix and the inverse matrix
     }
 
     T value() {
@@ -146,6 +146,10 @@ public:
     }
 
     PCoord<T> value(int i) {
+
+    }
+
+    T laplace(int i) {
 
     }
 
