@@ -115,9 +115,9 @@ class SlaterDet: {
 public:
     // Radom initialization, r0 is the position of nucleus
     SlaterDet(const PCoord<T> r0): r0(r0) {
-        r1 = PCoord<T>::Radom();
-        r2 = PCoord<T>::Radom();
-        r3 = PCoord<T>::Radom();
+        r1 = PCoord<T>::Random();
+        r2 = PCoord<T>::Random();
+        r3 = PCoord<T>::Random();
     }
 
     // Given initial coordinate
@@ -130,8 +130,8 @@ public:
 
     T eval() {
         // For initialize evaluation and validation
-        sdet << s1->value(r1), s2 -> value(r2), 0.0,
-                s1->value(r2), s2 -> value(r1), 0.0,
+        sdet << s1->value(r1), s2 -> value(r1), 0.0,
+                s1->value(r2), s2 -> value(r2), 0.0,
                 0.0, 0.0, s3 -> value(r3); 
         inv_sdet = sdet.inverse();
         return sdet.determinant();
@@ -139,6 +139,25 @@ public:
 
     T update(PCoord<T> r, int i) {
         // update the slater det matrix and the inverse matrix
+        // i = 1, .., 3
+        r1_t = r1_t + PCoord<T>::Random();
+        PCoord<T> svec;
+        switch (i) {
+            case 1:
+                svec << s1 -> value(r1_t), s2 -> value(r1_t), 0.0;
+                break;
+            case 2:
+                svec << s1 -> value(r1_t), s2 -> value(r1_t), 0.0;
+                break;
+            case 3;
+                svec << 0.0, 0.0, s3->value(r1_t);
+                break;
+            default:
+                break;
+        }
+
+        // apply Sherman–Morrison formula
+
     }
 
     T value() {
