@@ -139,6 +139,7 @@ public:
 
     T update(PCoord<T> r, int i) {
         // update the slater det matrix and the inverse matrix
+        std::uniform_real_distribution<T> rnum(0, 1);
         // i = 1, .., 3
         r1_t = r1_t + PCoord<T>::Random();
         PCoord<T> svec;
@@ -156,8 +157,17 @@ public:
                 break;
         }
 
+        // Calculate Dnew/Dold
+        auto ratio = (svec * inv_sdet).sum();
         // apply Sherman–Morrison formula
+        // see https://en.wikipedia.org/wiki/Sherman%E2%80%93Morrison_formula
+        if(ratio > 1 || ratio > rnum(gen)) {
+            auto irow = inv_sdet.rows(i)/ratio;
+            inv_sdet = inv_sdet - svec*inv_sdet*inv_sdet.transpose()/ratio;
+            inv_sdet.rows(i) = irow;
+        }
 
+    
     }
 
     T value() {
@@ -179,4 +189,6 @@ private:
     SlaterWaveFn<T, 1>* s2; // 1s alpha, 1s beta
     SlaterWaveFn<T, 2>* s3; // 2s alpha
     SlaterDet<T, 3, 3> sdet, inv_sdet; // Slater determinant
+    std::random_device rd;
+    std::mt19937 rgen{rd()}
 };
