@@ -137,7 +137,7 @@ public:
         return sdet.determinant();
     }
 
-    T update(PCoord<T> r, int i) {
+    void update(PCoord<T> r, int i) {
         // update the slater det matrix and the inverse matrix
         std::uniform_real_distribution<T> rnum(0, 1);
         // i = 1, .., 3
@@ -166,15 +166,13 @@ public:
             inv_sdet = inv_sdet - svec*inv_sdet*inv_sdet.transpose()/ratio;
             inv_sdet.rows(i) = irow;
         }
-
-    
     }
 
-    T value() {
+    // do we need this?
+    // T value() {
+    // }
 
-    }
-
-    PCoord<T> value(int i) {
+    PCoord<T> grad(int i) {
 
     }
 
