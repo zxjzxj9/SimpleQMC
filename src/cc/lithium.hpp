@@ -140,18 +140,19 @@ public:
     void update(PCoord<T> r, int i) {
         // update the slater det matrix and the inverse matrix
         std::uniform_real_distribution<T> rnum(0, 1);
-        // i = 1, .., 3
-        r1_t = r1_t + PCoord<T>::Random();
         PCoord<T> svec;
         switch (i) {
+            case 0:
+                auto r = r1 + PCoord<T>::Random();
+                svec << s1 -> value(r), s2 -> value(r), 0.0;
+                break;
             case 1:
-                svec << s1 -> value(r1_t), s2 -> value(r1_t), 0.0;
+                auto r = r2 + PCoord<T>::Random();
+                svec << s1 -> value(r), s2 -> value(r), 0.0;
                 break;
-            case 2:
-                svec << s1 -> value(r1_t), s2 -> value(r1_t), 0.0;
-                break;
-            case 3;
-                svec << 0.0, 0.0, s3->value(r1_t);
+            case 2;
+                auto r = r3 + PCoord<T>::Random();
+                svec << 0.0, 0.0, s3->value(r);
                 break;
             default:
                 break;
@@ -173,11 +174,39 @@ public:
     // }
 
     PCoord<T> grad(int i) {
-
+        PCoord<T> svec;
+        switch (i) {
+            case 0:
+                svec << s1 -> grad(r1), s2 -> grad(r1), 0.0;
+                break;
+            case 1:
+                svec << s1 -> grad(r2), s2 -> grad(r2), 0.0;
+                break;
+            case 2;
+                svec << 0.0, 0.0, s3->grad(r3);
+                break;
+            default:
+                break;
+        }
+        return inv_sde * svec;        
     }
 
     T laplace(int i) {
-
+        PCoord<T> svec;
+        switch (i) {
+            case 0:
+                svec << s1 -> laplace(r1), s2 -> laplace(r1), 0.0;
+                break;
+            case 1:
+                svec << s1 -> laplace(r2), s2 -> laplace(r2), 0.0;
+                break;
+            case 2;
+                svec << 0.0, 0.0, s3->laplace(r3);
+                break;
+            default:
+                break;
+        }
+        return inv_sde * svec;    
     }
 
 private:
