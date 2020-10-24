@@ -166,7 +166,8 @@ public:
             auto irow = inv_sdet.rows(i)/ratio;
             inv_sdet = inv_sdet - svec*inv_sdet*inv_sdet.transpose()/ratio;
             inv_sdet.rows(i) = irow;
-        }
+            update = true;
+        } else update = false;
     }
 
     // do we need this?
@@ -218,4 +219,5 @@ private:
     SlaterDet<T, 3, 3> sdet, inv_sdet; // Slater determinant
     std::random_device rd;
     std::mt19937 rgen{rd()}
+    bool update = false;
 };
