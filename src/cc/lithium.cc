@@ -1,5 +1,5 @@
 #include <fmt/core.h>
-#include <cxxopts.hpp
+#include <cxxopts.hpp>
 
 #include "lithium.hpp"
 
