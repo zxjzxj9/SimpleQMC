@@ -187,9 +187,18 @@ public:
                 svec << 0.0, 0.0, s3->grad(r3);
                 break;
             default:
-                break;
+                throw std::runtime_error("No such index" + std::to_string(i) + " exists");
         }
         return inv_sde * svec;        
+    }
+
+    T energy() {
+        // two different cases, whether/not sdet is updated
+        if(update) {
+            return 0;
+        } else {
+            return 0;
+        }
     }
 
     T laplace(int i) {
@@ -205,6 +214,7 @@ public:
                 svec << 0.0, 0.0, s3->laplace(r3);
                 break;
             default:
+                throw std::runtime_error("No such index" + std::to_string(i) + " exists");
                 break;
         }
         return inv_sde * svec;    
