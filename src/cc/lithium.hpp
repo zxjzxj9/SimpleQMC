@@ -105,6 +105,13 @@ private:
 // For Jastrow term of wave function
 template<typename T>
 class Jastrow: {
+public:
+    Jastrow(const PCoord<T> r1, const PCoord<T> r2): r1(r1), r2(r2) {
+
+    }
+
+private:
+    PCoord<T> r1, r2;
 
 };
 
